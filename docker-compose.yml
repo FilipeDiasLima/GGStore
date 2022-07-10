@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  database_ggstore:
+    image: mysql
+    container_name: database_ggstore
+    restart: always
+    ports:
+      - 4321:4321
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - mysql_config:/etc/mysql
+  server:
+    build:
+      context: ./server
+    container_name: api_ggstore
+    ports:
+      - ${PORT_BACK}:${PORT_BACK}
+    volumes:
+      - ./server:/usr/app
+    env_file:
+      - ./.env
+    depends_on:
+      - database_ggstore
+  client:
+    build:
+      context: ./client
+    container_name: client_ggstore
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./client:/usr/app
+    env_file:
+      - ./.env
+volumes:
+  mysql_data:
+    driver: local
+  mysql_config:
