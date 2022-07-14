@@ -31,7 +31,6 @@ User.init(
   },
   {
     sequelize: database.connection,
-    freezeTableName: true,
   }
 );
 

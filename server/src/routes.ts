@@ -9,6 +9,8 @@ const router = Router();
 
 // rotas publicas
 router.post('/user', UserController.create)
+router.get('/user', UserController.index)
+
 router.post('/sessions', SessionController.create)
 
 // rotas privadas
