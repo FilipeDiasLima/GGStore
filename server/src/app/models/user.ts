@@ -1,38 +1,44 @@
-'use strict';
-import { Model } from 'sequelize'
-import bcrypt from 'bcryptjs'
 
-export default (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  User.init({
-    name: DataTypes.STRING,
-    provider: DataTypes.BOOLEAN,
-    email: DataTypes.STRING,
-    password: DataTypes.VIRTUAL,
-    password_hash: DataTypes.STRING,
-    avatar: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
+import Sequelize, { Model } from 'sequelize';
+import bcrypt from 'bcryptjs';
 
-  User.addHook('beforeSave', async (user: any) => {
-    if (user.password) {
-      user.password_hash = await bcrypt.hash(user.password, 8);
-    }
-  })
+import database from '../../database'
 
-  function checkPassword(password) {
+class User extends Model {
+  declare id: number;
+  declare name: string;
+  declare email: string;
+  declare password: string;
+  declare password_hash: string;
+  declare provider: boolean;
+  declare avatar: string;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
+
+  public async checkPassword(password: string): Promise<boolean> {
     return bcrypt.compare(password, this.password_hash);
   }
-  return User;
-};
+}
+
+User.init(
+  {
+    name: Sequelize.STRING,
+    provider: Sequelize.BOOLEAN,
+    email: Sequelize.STRING,
+    password: Sequelize.VIRTUAL,
+    password_hash: Sequelize.STRING,
+    avatar: Sequelize.STRING,
+  },
+  {
+    sequelize: database.connection,
+    freezeTableName: true,
+  }
+);
+
+User.addHook('beforeSave', async (user: User): Promise<void> => {
+  if (user.password) {
+    user.password_hash = await bcrypt.hash(user.password, 8);
+  }
+})
+
+export default User;
