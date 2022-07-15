@@ -17,7 +17,7 @@ class SessionController {
       }
 
       return response.status(201).json({
-        userFormated,
+        user: userFormated,
         token
       })
     } catch (error) {

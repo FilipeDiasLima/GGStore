@@ -27,6 +27,27 @@ class UserController {
       return response.status(400).json({ error })
     }
   }
+
+  async update(request: Request, response: Response) {
+    try {
+      const { name, oldPassword, password } = request.body
+      const avatarFilename = request.file?.filename
+      const userId = request.user.id
+
+      const userService = await UserService.update({ name, oldPassword, password, userId, avatarFilename })
+
+      const userFormated = {
+        name: userService.name,
+        avatar: userService.avatar,
+      }
+
+      return response.status(201).json({
+        user: userFormated
+      })
+    } catch (error) {
+      return response.status(400).json({ error })
+    }
+  }
 }
 
 export default new UserController

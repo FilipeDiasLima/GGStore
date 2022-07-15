@@ -26,6 +26,7 @@ class SessionService {
     }
 
     const token = sign({}, auth.secret, {
+      subject: String(user.id),
       expiresIn: auth.expiresIn
     })
 
