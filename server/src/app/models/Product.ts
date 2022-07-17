@@ -9,13 +9,12 @@ class Product extends Model {
   declare user_id: number;
   declare name: string;
   declare price: number;
-  declare imagePoster: string;
-  declare imageCover: string;
+  declare image_poster: string;
+  declare image_cover: string;
   declare plataform: string;
-  declare gender: string;
   declare studio: string;
   declare amount: number;
-  declare release: Date;
+  declare release: string;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
 }
@@ -24,13 +23,12 @@ Product.init(
   {
     name: Sequelize.STRING,
     price: Sequelize.FLOAT,
-    imagePoster: Sequelize.STRING,
-    imageCover: Sequelize.STRING,
+    image_poster: Sequelize.STRING,
+    image_cover: Sequelize.STRING,
     plataform: Sequelize.STRING,
-    gender: Sequelize.STRING,
     studio: Sequelize.STRING,
     amount: Sequelize.INTEGER,
-    release: Sequelize.DATE,
+    release: Sequelize.STRING,
   },
   {
     sequelize: database.connection,

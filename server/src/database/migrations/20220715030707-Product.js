@@ -33,10 +33,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      gender: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       studio: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -47,7 +43,7 @@ module.exports = {
       },
       release: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

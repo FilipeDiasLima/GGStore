@@ -20,7 +20,7 @@ class UserController {
 
   async index(request: Request, response: Response) {
     try {
-      const userService = await UserService.get(request)
+      const userService = await UserService.index(request)
 
       return response.status(201).json(userService)
     } catch (error) {

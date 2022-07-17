@@ -1,10 +1,7 @@
 import User from "../models/User"
 import AppError from '../../erros/AppError'
 import { Request } from "express"
-import path from 'path';
-import uploadConfig from "../../config/upload";
-import fs from 'fs';
-
+import { deleteFile } from '../../utils/file'
 interface UserProps {
   name: string
   email: string
@@ -27,7 +24,7 @@ class UserService {
     })
 
     if (userExists) {
-      throw new AppError('Email address already used.')
+      throw new AppError('Email address already used.', 400)
     }
 
     const user = await User.create({ name, email, password, provider })
@@ -35,7 +32,7 @@ class UserService {
     return user
   }
 
-  public async get(request: Request) {
+  public async index(request: Request) {
     const { page = 1 } = request.query
 
     const users = await User.findAll({
@@ -47,7 +44,6 @@ class UserService {
   }
 
   public async update({ name, oldPassword, password, userId, avatarFilename }: UpdateUserProps) {
-
     const user = await User.findByPk(userId)
 
     if (!user) {
@@ -60,20 +56,19 @@ class UserService {
 
     if (user.avatar) {
       // Deletar avatar anterior
-
-      const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
-
-      if (userAvatarFileExists) {
-        await fs.promises.unlink(userAvatarFilePath);
-      }
+      console.log('REMOVENDO AVATAR')
+      await deleteFile(`./tmp/avatar/${user.avatar}`)
     }
 
     user.name = name || user.name
     user.password = password || user.password
     user.avatar = avatarFilename || user.avatar
 
-    const response = await user.update(user)
+    const response = await user.update({
+      name: user.name,
+      password: user.password,
+      avatar: user.avatar
+    })
 
     return response
   }
