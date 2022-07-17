@@ -13,7 +13,6 @@ class Product extends Model {
   declare image_cover: string;
   declare plataform: string;
   declare studio: string;
-  declare amount: number;
   declare release: string;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
@@ -27,7 +26,6 @@ Product.init(
     image_cover: Sequelize.STRING,
     plataform: Sequelize.STRING,
     studio: Sequelize.STRING,
-    amount: Sequelize.INTEGER,
     release: Sequelize.STRING,
   },
   {

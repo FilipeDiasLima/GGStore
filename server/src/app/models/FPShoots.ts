@@ -3,14 +3,14 @@ import { Model } from 'sequelize';
 import database from '../../database'
 import Product from './Product';
 
-class FPS extends Model {
+class FPShoots extends Model {
   declare id: number;
   declare product_id: number;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
 }
 
-FPS.init(
+FPShoots.init(
   {
   },
   {
@@ -18,6 +18,6 @@ FPS.init(
   }
 );
 
-FPS.belongsTo(Product, { foreignKey: 'product_id', as: 'product' })
+FPShoots.belongsTo(Product, { foreignKey: 'product_id', as: 'product' })
 
-export default FPS;
+export default FPShoots;

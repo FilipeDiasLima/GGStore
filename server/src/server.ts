@@ -10,8 +10,6 @@ const PORT = process.env.PORT_BACK || 3333
 
 app.use(express.json());
 
-app.use('/files', express.static(uploadConfig.directory))
-
 app.use(router);
 
 app.listen(PORT, () => {

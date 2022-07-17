@@ -6,9 +6,14 @@ class ProductController {
     try {
       const userId = request.user.id
 
-      request.body.user_id = userId
+      const data = {
+        user_id: userId,
+        ...request.body,
+        image_poster: request.files[0].filename,
+        image_cover: request.files[1].filename,
+      }
 
-      const productService = await ProductService.create(request.body)
+      const productService = await ProductService.create(data)
 
       return response.status(201).json(productService)
     } catch (error) {

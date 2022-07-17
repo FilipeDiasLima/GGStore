@@ -7,7 +7,7 @@ import Action from "../models/Action"
 import Adventure from "../models/Adventure"
 import RPG from "../models/RPG"
 import Racing from "../models/Racing"
-import FPS from "../models/FPS"
+import FPS from "../models/FPShoots"
 import Indy from "../models/Indy"
 
 interface ProductProps {
@@ -18,7 +18,6 @@ interface ProductProps {
   image_cover: string
   plataform: string
   studio: string
-  amount: number
   release: string
   categories: [category: string]
 }
@@ -26,6 +25,7 @@ interface ProductProps {
 class ProductService {
   public async create(productRequest: ProductProps) {
     const user = await User.findByPk(productRequest.user_id)
+    console.log(productRequest)
 
     if (!user.provider) {
       throw new AppError('Only provider users can register products.', 401);
@@ -42,12 +42,11 @@ class ProductService {
     const product = await Product.create({
       user_id: productRequest.user_id,
       name: productRequest.name.toLocaleLowerCase(),
-      price: productRequest.price,
+      price: Number(productRequest.price),
       image_poster: productRequest.image_poster,
       image_cover: productRequest.image_cover,
-      plataform: productRequest.plataform,
+      plataform: productRequest.plataform.toLocaleLowerCase(),
       studio: productRequest.studio.toLocaleLowerCase(),
-      amount: productRequest.amount,
       release: productRequest.release,
     })
 
@@ -73,21 +72,6 @@ class ProductService {
     })
 
     return product
-  }
-
-  private async getProductId() {
-    try {
-      const action = new Promise((resolve, reject) => {
-        return resolve(
-          Action.findAll({
-            attributes: ['id', 'product_id']
-          })
-        )
-      })
-      return await action
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   public async index(request: Request) {

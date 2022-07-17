@@ -8,9 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      sale_id: {
+      user_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'Sales', key: 'id' },
+        references: { model: 'Users', key: 'id' },
         allowNull: false,
       },
       product_id: {
@@ -18,8 +18,8 @@ module.exports = {
         references: { model: 'Products', key: 'id' },
         allowNull: false,
       },
-      amount: {
-        type: Sequelize.INTEGER,
+      key: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       createdAt: {

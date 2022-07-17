@@ -3,27 +3,26 @@ import Sequelize, { Model } from 'sequelize';
 
 import database from '../../database'
 import Product from './Product';
-import Sale from './Sale';
+import User from './User';
 
 class SaleProduct extends Model {
   declare id: number;
-  declare sale_id: number;
   declare product_id: number;
-  declare amount: number;
+  declare key: string;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
 }
 
 SaleProduct.init(
   {
-    amount: Sequelize.INTEGER
+    key: Sequelize.STRING
   },
   {
     sequelize: database.connection,
   }
 );
 
-SaleProduct.belongsTo(Sale, { foreignKey: 'sale_id', as: 'sale' })
+SaleProduct.belongsTo(User, { foreignKey: 'user_id', as: 'user' })
 SaleProduct.belongsTo(Product, { foreignKey: 'product_id', as: 'product' })
 
 export default SaleProduct;
