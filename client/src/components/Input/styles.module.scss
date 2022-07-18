@@ -1,0 +1,37 @@
+.container {
+  background: #191B1F;
+  border-radius: 10px;
+  border: 2px solid #191B1F;
+  padding: 14px 18px;
+  width: 100%;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  border: 1px solid #666360;
+  transition: all 0.3s;
+
+  &+div {
+    margin-top: 8px;
+  }
+
+  &:focus-within {
+    transition: all 0.3s;
+    border: 1px solid #E58D26;
+  }
+
+  input {
+    flex: 1;
+    background: transparent;
+    border: 0;
+    color: #f4ede8;
+    font-size: 16px;
+
+    &::placeholder {
+      color: #666360;
+    }
+  }
+
+  svg {
+    margin-right: 16px;
+  }
+}

@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: 0;
+  outline: 0;
+}
+
+body,
+input,
+button,
+textarea {
+  font-family: 'Inria Sans', sans-serif;
+  color: #FFF;
+}
+
+body {
+  background: #191B1F;
+  color: #FFF;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+}
