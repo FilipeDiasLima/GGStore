@@ -1,15 +1,11 @@
-import { Routes, Route } from 'react-router-dom';
-
-import SignIn from '../pages/SignIn'
-import SignUp from '../pages/SignUp';
+import { useContext } from "react"
+import AuthContext from "../context/auth"
+import AppRoutes from "./AppRoutes"
+import AuthRoutes from "./AuthRoutes"
 
 const Router = () => {
-  return (
-    <Routes>
-      <Route path='/login' element={<SignIn />} />
-      <Route path='/register' element={<SignUp />} />
-    </Routes>
-  )
+  const { isSigned } = useContext(AuthContext)
+  return isSigned ? <AppRoutes /> : <AuthRoutes />
 }
 
 export default Router

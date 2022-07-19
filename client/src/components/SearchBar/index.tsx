@@ -3,18 +3,19 @@ import { IconBaseProps } from 'react-icons';
 import styles from './styles.module.scss'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  name: string;
   icon?: React.ComponentType<IconBaseProps>;
 }
 
-const Input: React.FC<InputProps> = ({ icon: Icon, ...rest }) => {
+const SearchBar: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
   return (
     <div className={styles.container}>
-      {Icon && <Icon size={20} />}
       <input
         {...rest}
       />
+      {Icon && <Icon size={20} />}
     </div>
   )
 }
 
-export default Input
+export default SearchBar

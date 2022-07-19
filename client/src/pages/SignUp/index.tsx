@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import { FiMail, FiUser, FiLock, FiArrowLeft } from 'react-icons/fi';
 import Input from '../../components/Input'
@@ -26,7 +25,7 @@ const SignUp = () => {
           type="password"
           placeholder="Confirmar Senha"
         />
-        <Button type="submit">Cadastrar</Button>
+        <Button type="button">Cadastrar</Button>
         <Link to="/login">
           <FiArrowLeft />
           Já possuo uma conta
