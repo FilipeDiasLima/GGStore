@@ -17,10 +17,11 @@ const uploadImageProduct = multer(uploadConfig.upload('./tmp/product'));
 // rotas publicas
 router.post('/user', UserController.create)
 
-router.post('/sessions', SessionController.create)
+router.post('/session', SessionController.create)
 
 // rotas privadas
 router.use(ensureAuth)
+
 router.get('/user', UserController.index)
 router.put('/user', uploadAvatar.single('avatar'), UserController.update)
 
