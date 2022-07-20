@@ -20,8 +20,6 @@ const Home = () => {
             <SaleCard />
             <SaleCard />
             <SaleCard />
-            <SaleCard />
-            <SaleCard />
           </div>
         </div>
       </div>
