@@ -26,6 +26,7 @@
   main {
     display: flex;
     flex-direction: column;
+    width: 100%;
 
     >img {
       margin-top: 20px;
@@ -34,17 +35,62 @@
       object-fit: cover;
       object-position: center;
     }
+
+    >div {
+      display: flex;
+      flex-direction: row;
+      padding: 40px 0;
+    }
+  }
+}
+
+.left {
+  display: block;
+  width: 40%;
+  align-items: flex-start;
+}
+
+.ritgh {
+  display: block;
+  width: 40%;
+  align-items: flex-start;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+
+  >strong {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  >span {
+    font-size: 20px;
+    font-weight: 400;
+    padding-left: 10px;
+  }
+
+  >svg {
+    cursor: pointer;
+    padding-left: 10px;
+    transition: all 0.3s;
+
+    &:hover {
+      color: #ff9000;
+    }
   }
 }
 
 .showText {
   font-weight: 300;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .hiddenText {
   font-weight: 300;
-  font-size: 24px;
+  font-size: 20px;
   filter: blur(10px);
   -webkit-user-select: none;
   -khtml-user-select: none;

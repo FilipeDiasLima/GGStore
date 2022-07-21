@@ -17,7 +17,7 @@ const Header = () => {
     <header className={styles.container}>
       <nav className={styles.nav1}>
         <Link className={pathname === '/store' ? styles.linkActive : styles.link} to='/store'>Loja</Link>
-        <Link className={pathname === '/library' ? styles.linkActive : styles.link} to='/library'>Biblioteca</Link>
+        <Link className={pathname === '/library' || pathname === '/game' ? styles.linkActive : styles.link} to='/library'>Biblioteca</Link>
       </nav>
       <SearchBar name='search' placeholder='Buscar na loja...' icon={FiSearch} />
       <nav className={styles.nav2}>
