@@ -20,10 +20,7 @@ const CoverDropzone = ({ onFileUploaded }: Props) => {
   }, [])
 
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: {
-      'image': ['.*']
-    }
+    onDrop
   })
 
   return (

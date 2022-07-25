@@ -20,10 +20,7 @@ const PosterDropzone = ({ onFileUploaded }: Props) => {
   }, [])
 
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: {
-      'image': ['.*']
-    }
+    onDrop
   })
 
   return (

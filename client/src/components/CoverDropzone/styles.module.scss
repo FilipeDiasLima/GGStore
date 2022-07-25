@@ -9,6 +9,7 @@
   align-items: center;
   margin-top: 48px;
   outline: 0;
+  cursor: pointer;
 
   >img {
     width: 100%;
@@ -28,12 +29,25 @@
     justify-content: center;
     align-items: center;
     color: #FFF;
+    transition: all 0.3s;
 
     >svg {
       color: #E58D26;
       width: 24px;
       height: 24px;
       margin-bottom: 8px;
+      transition: all 0.3s;
+    }
+  }
+
+  &:hover {
+
+    >p {
+      background: #ffab4b28;
+
+      >svg {
+        transform: translateY(-10px);
+      }
     }
   }
 }

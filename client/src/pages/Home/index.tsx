@@ -1,11 +1,43 @@
+import { useContext, useEffect, useState } from 'react'
 import Filter from '../../components/Filter'
 import Header from '../../components/Header'
 import MainBanner from '../../components/MainBanner'
 import SaleCard from '../../components/SaleCard'
+import AuthContext from '../../context/auth'
+import { api } from '../../services/api'
 
 import styles from './styles.module.scss'
 
+interface SaleCardProp {
+  id: number
+  name: string
+  price: number
+  cover_url: string
+  plataform: string
+  studio: string
+  release: string
+}
+
 const Home = () => {
+  const { token } = useContext(AuthContext)
+  const [games, setGames] = useState([])
+
+  async function getGames() {
+    const response = await api.get('product', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+
+    setGames(response.data)
+  }
+
+  console.log(games)
+
+  useEffect(() => {
+    getGames()
+  }, [])
+
   return (
     <>
       <Header />
@@ -14,12 +46,18 @@ const Home = () => {
         <div className={styles.main}>
           <MainBanner />
           <div className={styles.cards}>
-            <SaleCard />
-            <SaleCard />
-            <SaleCard />
-            <SaleCard />
-            <SaleCard />
-            <SaleCard />
+            {games.map((game: SaleCardProp) => (
+              <SaleCard
+                key={game.id}
+                id={game.id}
+                name={game.name}
+                image_cover={game.cover_url}
+                plataform={game.plataform}
+                price={game.price}
+                release={game.release}
+                studio={game.studio}
+              />
+            ))}
           </div>
         </div>
       </div>

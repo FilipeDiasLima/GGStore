@@ -25,7 +25,7 @@ interface ProductProps {
 class ProductService {
   public async create(productRequest: ProductProps) {
     const user = await User.findByPk(productRequest.user_id)
-    console.log(productRequest)
+    console.log({ productRequest })
 
     if (!user.provider) {
       throw new AppError('Only provider users can register products.', 401);
@@ -40,7 +40,7 @@ class ProductService {
     }
 
     const product = await Product.create({
-      user_id: productRequest.user_id,
+      user_id: Number(productRequest.user_id),
       name: productRequest.name.toLocaleLowerCase(),
       price: Number(productRequest.price),
       image_poster: productRequest.image_poster,
@@ -149,10 +149,19 @@ class ProductService {
       const products = await Product.findAll({
         where: {
           id: productsArr
+        },
+        raw: true
+      })
+
+      const serializedProduct = products.map(product => {
+        return {
+          ...product,
+          poster_url: `http:/localhost:3333/tmp/prodcut/${product.image_poster}`,
+          cover_url: `http:/localhost:3333/tmp/prodcut/${product.image_cover}`,
         }
       })
 
-      return products
+      return serializedProduct
     } else {
       let whereCondition = {}
       if (name) {
@@ -170,9 +179,18 @@ class ProductService {
         ],
         limit: 10,
         offset: (Number(page) - 1) * 10,
+        raw: true
       })
 
-      return products
+      const serializedProduct = products.map(product => {
+        return {
+          ...product,
+          poster_url: `http:/localhost:3333/tmp/product/${product.image_poster}`,
+          cover_url: `http:/localhost:3333/tmp/product/${product.image_cover}`,
+        }
+      })
+
+      return serializedProduct
     }
   }
 }

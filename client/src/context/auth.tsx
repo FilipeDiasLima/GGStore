@@ -10,6 +10,7 @@ interface AuthProps {
 interface AuthContextData {
   isSigned: boolean;
   user: object | null;
+  token: string;
   signIn(data: LoginData): Promise<void>
   logout(): void
 }
@@ -24,6 +25,7 @@ const AuthContext = createContext({} as AuthContextData)
 export const AuthProvider = ({ children }: AuthProps) => {
   const [cookies, setCookies, removeCookie] = useCookies(['token'])
 
+  const [token, setToken] = useState('')
   const [isSigned, setIsSigned] = useState(false)
   const [user, setUser] = useState({})
 
@@ -37,6 +39,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
     setCookies('token', response.data.token)
     setUser(response.data.user)
     setIsSigned(true)
+
     navigate('/store')
   }
 
@@ -47,13 +50,17 @@ export const AuthProvider = ({ children }: AuthProps) => {
   }
 
   useEffect(() => {
-    if (cookies.token) setIsSigned(true)
+    if (cookies.token) {
+      setIsSigned(true)
+      setToken(cookies.token)
+    }
   }, [cookies.token])
 
   return (
     <AuthContext.Provider value={{
       isSigned,
       user,
+      token,
       signIn,
       logout
     }}>
