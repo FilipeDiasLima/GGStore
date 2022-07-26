@@ -23,7 +23,6 @@ const Home = () => {
   const [games, setGames] = useState([])
 
   async function getGames(filtersObj: {}) {
-    console.log(filtersObj)
     const response = await api.get('product', {
       params: filtersObj,
       headers: {

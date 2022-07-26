@@ -23,6 +23,8 @@ const Filter = ({ getFilters }: FilterProps) => {
       indy: indy || null,
       racing: racing || null,
       rpg: rpg || null,
+      priceFrom: priceFrom || 0,
+      priceTo: priceTo || 1000,
     })
   }
 
