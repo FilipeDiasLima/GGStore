@@ -3,6 +3,7 @@ import router from './routes';
 import './database/index'
 import 'dotenv/config'
 import cors from 'cors';
+import path from 'path';
 
 const app = express();
 
@@ -12,7 +13,11 @@ app.use(cors());
 
 app.use(express.json());
 
+app.use('/tmp/avatar', express.static(path.resolve(__dirname, '..', 'tmp', 'avatar')));
+app.use('/tmp/product', express.static(path.resolve(__dirname, '..', 'tmp', 'product')));
+
 app.use(router);
+
 
 app.listen(PORT, () => {
   console.log(`Server is running\nPort: ${PORT}`)

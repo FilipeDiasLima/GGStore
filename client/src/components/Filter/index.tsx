@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import styles from './styles.module.scss'
 
-const Filter = () => {
+interface FilterProps {
+  getFilters: ({ }) => void
+}
+
+const Filter = ({ getFilters }: FilterProps) => {
   const [action, setAction] = useState(false)
   const [adventure, setAdventure] = useState(false)
   const [fps, setFps] = useState(false)
@@ -10,6 +14,17 @@ const Filter = () => {
   const [rpg, setRpg] = useState(false)
   const [priceFrom, setPriceFrom] = useState('')
   const [priceTo, setPriceTo] = useState('')
+
+  function handleSetFilters() {
+    getFilters({
+      action: action || null,
+      adventure: adventure || null,
+      fps: fps || null,
+      indy: indy || null,
+      racing: racing || null,
+      rpg: rpg || null,
+    })
+  }
 
   return (
     <div className={styles.container}>
@@ -45,7 +60,7 @@ const Filter = () => {
           className={indy ? styles.marked : styles.unmarked}
         >
         </button>
-        <span>Indy</span>
+        <span>Indie</span>
       </div>
       <div className={styles.filterOption}>
         <button
@@ -85,7 +100,7 @@ const Filter = () => {
 
       <div className={styles.line} />
 
-      <button type="button" className={styles.applyButton}>
+      <button type="button" className={styles.applyButton} onClick={handleSetFilters}>
         Aplicar filtros
       </button>
     </div>

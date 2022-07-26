@@ -37,6 +37,7 @@ class UserService {
 
     const users = await User.findAll({
       limit: 10,
+      attributes: ['id', 'name', 'provider', 'email', 'avatar'],
       offset: (Number(page) - 1) * 10,
     })
 

@@ -11,11 +11,15 @@ import AuthContext from '../../context/auth';
 
 const Header = () => {
   const { pathname } = useLocation()
-  const { logout } = useContext(AuthContext)
+  const { logout, user } = useContext(AuthContext)
 
   return (
     <header className={styles.container}>
       <nav className={styles.nav1}>
+        {
+          user?.provider &&
+          <Link className={pathname === '/newGame' ? styles.linkActive : styles.link} to='/newGame'>Novo Jogo</Link>
+        }
         <Link className={pathname === '/store' ? styles.linkActive : styles.link} to='/store'>Loja</Link>
         <Link className={pathname === '/library' || pathname === '/game' ? styles.linkActive : styles.link} to='/library'>Biblioteca</Link>
       </nav>

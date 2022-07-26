@@ -156,8 +156,8 @@ class ProductService {
       const serializedProduct = products.map(product => {
         return {
           ...product,
-          poster_url: `http:/localhost:3333/tmp/prodcut/${product.image_poster}`,
-          cover_url: `http:/localhost:3333/tmp/prodcut/${product.image_cover}`,
+          poster_url: `http://localhost:3333/tmp/product/${product.image_poster}`,
+          cover_url: `http://localhost:3333/tmp/product/${product.image_cover}`,
         }
       })
 
@@ -185,8 +185,8 @@ class ProductService {
       const serializedProduct = products.map(product => {
         return {
           ...product,
-          poster_url: `http:/localhost:3333/tmp/product/${product.image_poster}`,
-          cover_url: `http:/localhost:3333/tmp/product/${product.image_cover}`,
+          poster_url: `http://localhost:3333/tmp/product/${product.image_poster}`,
+          cover_url: `http://localhost:3333/tmp/product/${product.image_cover}`,
         }
       })
 

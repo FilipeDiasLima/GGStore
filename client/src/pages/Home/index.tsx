@@ -22,8 +22,10 @@ const Home = () => {
   const { token } = useContext(AuthContext)
   const [games, setGames] = useState([])
 
-  async function getGames() {
+  async function getGames(filtersObj: {}) {
+    console.log(filtersObj)
     const response = await api.get('product', {
+      params: filtersObj,
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -32,17 +34,17 @@ const Home = () => {
     setGames(response.data)
   }
 
-  console.log(games)
-
   useEffect(() => {
-    getGames()
+    getGames({})
   }, [])
 
   return (
     <>
       <Header />
       <div className={styles.container}>
-        <Filter />
+        <Filter
+          getFilters={getGames}
+        />
         <div className={styles.main}>
           <MainBanner />
           <div className={styles.cards}>

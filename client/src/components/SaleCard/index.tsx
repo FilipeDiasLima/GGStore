@@ -1,5 +1,4 @@
 import styles from './styles.module.scss'
-import capa from '../../assets/god-of-war.png'
 
 interface SaleCardProp {
   id: number
@@ -14,7 +13,13 @@ interface SaleCardProp {
 const SaleCard = (item: SaleCardProp) => {
   return (
     <div className={styles.container}>
-      <div style={{ background: `url(${item.image_cover}) no-repeat`, backgroundSize: 'cover' }} className={styles.cover}>
+      <div
+        className={styles.cover}
+        style={{
+          backgroundImage: `url(${item.image_cover})`,
+          backgroundSize: 'cover',
+        }}
+      >
         <div>
           <span>R$ {item.price}</span>
         </div>

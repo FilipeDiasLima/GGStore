@@ -21,8 +21,8 @@ const RegisterGame = () => {
   const [plataform, setPlataform] = useState('')
   const [release, setRelease] = useState('')
 
-  const [action, setAction] = useState(true)
-  const [adventure, setAdventure] = useState(true)
+  const [action, setAction] = useState(false)
+  const [adventure, setAdventure] = useState(false)
   const [fps, setFps] = useState(false)
   const [indy, setIndy] = useState(false)
   const [racing, setRacing] = useState(false)
@@ -53,7 +53,7 @@ const RegisterGame = () => {
     if (fps) categoriesArr.push('fps')
     if (indy) categoriesArr.push('indy')
     if (racing) categoriesArr.push('racing')
-    if (rpg) categoriesArr.push('racing')
+    if (rpg) categoriesArr.push('rpg')
 
     data.append('categories', categoriesArr.join(','))
 
@@ -145,7 +145,7 @@ const RegisterGame = () => {
                 className={indy ? styles.marked : styles.unmarked}
               >
               </button>
-              <span>Indy</span>
+              <span>Indie</span>
             </div>
             <div className={styles.filterOption}>
               <button

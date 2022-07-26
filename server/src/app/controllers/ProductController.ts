@@ -6,6 +6,8 @@ class ProductController {
     try {
       const userId = Number(request.user.id)
 
+      console.log(request.body)
+
       request.body.categories = request.body.categories.split(',')
       request.body.price = Number(request.body.price)
 

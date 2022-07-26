@@ -7,9 +7,17 @@ interface AuthProps {
   children: ReactElement;
 }
 
+interface UserData {
+  id: number,
+  name: string,
+  email: string,
+  provider: boolean,
+  avatar: string
+}
+
 interface AuthContextData {
   isSigned: boolean;
-  user: object | null;
+  user: UserData | null;
   token: string;
   signIn(data: LoginData): Promise<void>
   logout(): void
@@ -20,6 +28,14 @@ interface LoginData {
   password: string
 }
 
+const initialUserData = {
+  id: 0,
+  name: '',
+  email: '',
+  provider: false,
+  avatar: ''
+}
+
 const AuthContext = createContext({} as AuthContextData)
 
 export const AuthProvider = ({ children }: AuthProps) => {
@@ -27,7 +43,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
 
   const [token, setToken] = useState('')
   const [isSigned, setIsSigned] = useState(false)
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(initialUserData)
 
   const navigate = useNavigate()
 
@@ -48,6 +64,19 @@ export const AuthProvider = ({ children }: AuthProps) => {
     setIsSigned(false)
     navigate('/login')
   }
+
+  useEffect(() => {
+    async function getUser() {
+      const response = await api.get('user', {
+        headers: {
+          'Authorization': `Bearer ${cookies.token}`
+        }
+      })
+      setUser(response.data[0])
+    }
+
+    getUser()
+  }, [])
 
   useEffect(() => {
     if (cookies.token) {
