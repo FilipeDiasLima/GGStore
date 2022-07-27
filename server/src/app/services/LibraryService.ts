@@ -18,12 +18,21 @@ class LibraryService {
           model: Product,
           as: 'product',
         }
-      ]
+      ],
     })
 
     const unique = [...new Map(products.map((item, key) => [item[key], item])).values()]
 
-    return unique
+    const serializedProduct = unique.map((product: any) => {
+      product = product.dataValues
+      return {
+        ...product,
+        poster_url: `http://localhost:3333/tmp/product/${product.product.image_poster}`,
+        cover_url: `http://localhost:3333/tmp/product/${product.product.image_cover}`,
+      }
+    })
+
+    return serializedProduct
   }
 
   public async indexGenders(productId: number) {

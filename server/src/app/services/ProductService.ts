@@ -91,9 +91,19 @@ class ProductService {
     const { id } = request.params
 
     if (id) {
-      const product = await Product.findByPk(Number(id))
+      const product = await Product.findOne({
+        where: { id: Number(id) },
+        raw: true
+      })
 
-      return product
+      const serializedProduct = {
+        ...product,
+        poster_url: `http://localhost:3333/tmp/product/${product.image_poster}`,
+        cover_url: `http://localhost:3333/tmp/product/${product.image_cover}`,
+      }
+
+      return serializedProduct
+
     }
     if (action || adventure || rpg || fps || indy || racing) {
       let productsArr = []

@@ -2,20 +2,32 @@ import styles from './styles.module.scss'
 import capa from '../../assets/god-of-war.png'
 import { useNavigate } from 'react-router-dom'
 
-const LibCard = () => {
+interface CardProps {
+  productId: number
+  gameId: number
+  title: string
+  cover_url: string
+}
+
+const LibCard = ({ title, cover_url, productId, gameId }: CardProps) => {
   const navigate = useNavigate()
 
   const goToGameScreen = () => {
-    navigate('/game')
+    navigate('/game', {
+      state: {
+        productId: productId,
+        gameId: gameId
+      }
+    })
   }
 
   return (
     <div className={styles.container} onClick={goToGameScreen}>
       <div className={styles.image}>
-        <div style={{ background: `url(${capa}) no-repeat`, backgroundSize: 'cover' }} className={styles.cover}></div>
+        <div style={{ background: `url(${cover_url})`, backgroundSize: 'cover' }} className={styles.cover}></div>
       </div>
       <div className={styles.info}>
-        <span>God of War</span>
+        <span>{title}</span>
       </div>
     </div>
   )

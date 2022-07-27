@@ -34,6 +34,7 @@ router.post('/sale', SaleController.create)
 router.get('/key', SaleController.indexKey)
 router.get('/key/:productId', SaleController.indexKey)
 
+router.get('/library', LibraryController.index)
 router.get('/library/:productId', LibraryController.index)
 
 router.get('/gender/:productId', LibraryController.getGender)
