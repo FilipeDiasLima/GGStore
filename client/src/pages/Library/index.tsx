@@ -8,11 +8,6 @@ import styles from './styles.module.scss'
 interface GameProps {
   id: number
   name: string
-}
-
-interface SaleProps {
-  product_id: number
-  product: GameProps
   cover_url: string
 }
 
@@ -20,11 +15,8 @@ const Library = () => {
   const [games, setGames] = useState([])
   const { token } = useContext(AuthContext)
 
-  async function getGames(productId: number | null) {
+  async function getGames() {
     const response = await api.get('library', {
-      params: {
-        productId: productId || null
-      },
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -34,19 +26,19 @@ const Library = () => {
   }
 
   useEffect(() => {
-    getGames(null)
+    getGames()
   }, [])
 
   return (
     <>
       <Header />
       <div className={styles.container}>
-        {games.map((game: SaleProps) => (
+        {games.map((game: GameProps) => (
           <LibCard
-            key={game.product.id}
-            productId={game.product_id}
-            gameId={game.product.id}
-            title={game.product.name}
+            key={game.id}
+            productId={game.id}
+            gameId={game.id}
+            title={game.name}
             cover_url={game.cover_url}
           />
         ))}

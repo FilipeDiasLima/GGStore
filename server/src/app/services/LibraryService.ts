@@ -1,3 +1,4 @@
+import Sequelize from "sequelize"
 import Action from "../models/Action"
 import Adventure from "../models/Adventure"
 import FPS from "../models/FPShoots"
@@ -9,26 +10,27 @@ import SaleProduct from "../models/SaleProduct"
 
 class LibraryService {
   public async index(userId: number) {
-
-    const products = await SaleProduct.findAll({
+    let arr = []
+    const sales = await SaleProduct.findAll({
       where: { user_id: userId },
-      attributes: ['product_id'],
-      include: [
-        {
-          model: Product,
-          as: 'product',
-        }
-      ],
+      attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('product_id')), 'product_id'],],
+      raw: true
     })
 
-    const unique = [...new Map(products.map((item, key) => [item[key], item])).values()]
+    sales.map(sale => {
+      arr.push(sale.product_id)
+    })
 
-    const serializedProduct = unique.map((product: any) => {
-      product = product.dataValues
+    const products = await Product.findAll({
+      where: { id: arr },
+      raw: true
+    })
+
+    const serializedProduct = products.map((product: any, index: number) => {
       return {
         ...product,
-        poster_url: `http://localhost:3333/tmp/product/${product.product.image_poster}`,
-        cover_url: `http://localhost:3333/tmp/product/${product.product.image_cover}`,
+        poster_url: `http://localhost:3333/tmp/product/${product.image_poster}`,
+        cover_url: `http://localhost:3333/tmp/product/${product.image_cover}`,
       }
     })
 
