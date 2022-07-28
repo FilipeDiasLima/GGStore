@@ -11,6 +11,7 @@
     >span {
       margin-left: 10px;
       font-size: 30px;
+      text-transform: capitalize;
     }
 
     >svg {
@@ -64,12 +65,15 @@
   >strong {
     font-size: 20px;
     font-weight: 700;
+    text-transform: capitalize;
   }
 
   >span {
+    color: #b5b5b5;
     font-size: 20px;
     font-weight: 400;
     padding-left: 10px;
+    text-transform: capitalize;
   }
 
   >svg {
@@ -81,21 +85,4 @@
       color: #ff9000;
     }
   }
-}
-
-.showText {
-  font-weight: 300;
-  font-size: 20px;
-}
-
-.hiddenText {
-  font-weight: 300;
-  font-size: 20px;
-  filter: blur(6px);
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
 }

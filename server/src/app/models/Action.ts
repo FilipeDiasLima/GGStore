@@ -18,6 +18,6 @@ Action.init(
   }
 );
 
-Action.belongsTo(Product, { foreignKey: 'product_id', as: 'product' })
+Action.belongsTo(Product, { foreignKey: 'product_id', as: 'product', onDelete: 'CASCADE' })
 
 export default Action;

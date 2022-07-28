@@ -42,12 +42,12 @@ class LibraryService {
     const action = await Action.findOne({
       where: { product_id: productId }
     })
-    if (action) genders.push('action')
+    if (action) genders.push('ação')
 
     const adventure = await Adventure.findOne({
       where: { product_id: productId }
     })
-    if (adventure) genders.push('adventure')
+    if (adventure) genders.push('aventura')
 
     const rpg = await RPG.findOne({
       where: { product_id: productId }
@@ -57,12 +57,12 @@ class LibraryService {
     const racing = await Racing.findOne({
       where: { product_id: productId }
     })
-    if (racing) genders.push('racing')
+    if (racing) genders.push('corrida')
 
     const indy = await Indy.findOne({
       where: { product_id: productId }
     })
-    if (indy) genders.push('indy')
+    if (indy) genders.push('indie')
 
     const fps = await FPS.findOne({
       where: { product_id: productId }

@@ -7,6 +7,7 @@ interface UserProps {
   email: string
   password: string
   provider: boolean
+  avatar: string
 }
 
 interface UpdateUserProps {
@@ -18,7 +19,7 @@ interface UpdateUserProps {
 }
 
 class UserService {
-  public async create({ name, email, password, provider }: UserProps) {
+  public async create({ name, email, password, provider, avatar }: UserProps) {
     const userExists = await User.findOne({
       where: { email }
     })
@@ -27,21 +28,24 @@ class UserService {
       throw new AppError('Email address already used.', 400)
     }
 
-    const user = await User.create({ name, email, password, provider })
+    const user = await User.create({ name, email, password, provider, avatar })
 
     return user
   }
 
-  public async index(request: Request) {
-    const { page = 1 } = request.query
-
-    const users = await User.findAll({
-      limit: 10,
+  public async get(request: Request) {
+    const user = await User.findOne({
+      where: { id: request.user.id },
       attributes: ['id', 'name', 'provider', 'email', 'avatar'],
-      offset: (Number(page) - 1) * 10,
+      raw: true
     })
 
-    return users
+    const serializedUser = {
+      ...user,
+      avatar_url: `http://localhost:3333/tmp/avatar/${user.avatar}`
+    }
+
+    return serializedUser
   }
 
   public async update({ name, oldPassword, password, userId, avatarFilename }: UpdateUserProps) {
@@ -57,7 +61,6 @@ class UserService {
 
     if (user.avatar) {
       // Deletar avatar anterior
-      console.log('REMOVENDO AVATAR')
       await deleteFile(`./tmp/avatar/${user.avatar}`)
     }
 

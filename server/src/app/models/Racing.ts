@@ -18,6 +18,6 @@ Racing.init(
   }
 );
 
-Racing.belongsTo(Product, { foreignKey: 'product_id', as: 'product' })
+Racing.belongsTo(Product, { foreignKey: 'product_id', as: 'product', onDelete: 'CASCADE' })
 
 export default Racing;

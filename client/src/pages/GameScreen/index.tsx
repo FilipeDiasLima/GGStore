@@ -1,8 +1,8 @@
 
 import { useContext, useEffect, useState } from 'react'
-import { FiArrowLeft, FiEye, FiEyeOff } from 'react-icons/fi'
+import { FiArrowLeft } from 'react-icons/fi'
 import { useNavigate, useLocation } from 'react-router-dom'
-import thumb from '../../assets/thumb.jpg'
+import GameKey from '../../components/GameKey'
 import Header from '../../components/Header'
 import AuthContext from '../../context/auth'
 import { api } from '../../services/api'
@@ -37,10 +37,10 @@ const GameScreen = () => {
   const location = useLocation()
   const state = location.state as StateProps
   const navigate = useNavigate()
-  const [showKey, setShowKey] = useState(false)
   const { token } = useContext(AuthContext)
   const [game, setGame] = useState<GameProps>(initalDataGame)
   const [keys, setKeys] = useState([])
+  const [categories, setCategories] = useState([])
 
   const goBack = () => {
     navigate('/library')
@@ -54,15 +54,21 @@ const GameScreen = () => {
       }
     })
     setGame(responseProduct.data)
+
     const responseKey = await api.get(`key/${state.productId}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     })
     setKeys(responseKey.data)
-  }
 
-  console.log(game)
+    const responseCategories = await api.get(`gender/${state.productId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    setCategories(responseCategories.data)
+  }
 
   useEffect(() => {
     getGames()
@@ -95,21 +101,13 @@ const GameScreen = () => {
               </div>
               <div className={styles.info}>
                 <strong>Gênero: </strong>
-                <span>Ação, Aventura, RPG</span>
+                <span>{categories.toString()}</span>
               </div>
             </div>
 
             <div className={styles.right}>
-              {keys.map((key: { key: string }) => (
-                <div className={styles.info}>
-                  <strong>Chave: </strong>
-                  <span className={showKey ? styles.showText : styles.hiddenText}>{key.key}</span>
-                  {showKey ? (
-                    <FiEye size={25} onClick={() => setShowKey(false)} />
-                  ) : (
-                    <FiEyeOff size={25} onClick={() => setShowKey(true)} />
-                  )}
-                </div>
+              {keys.map((key: { id: number, key: string }) => (
+                <GameKey key={key.id} gameKey={key.key} />
               ))}
             </div>
           </div>

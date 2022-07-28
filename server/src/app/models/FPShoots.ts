@@ -18,6 +18,6 @@ FPShoots.init(
   }
 );
 
-FPShoots.belongsTo(Product, { foreignKey: 'product_id', as: 'product' })
+FPShoots.belongsTo(Product, { foreignKey: 'product_id', as: 'product', onDelete: 'CASCADE' })
 
 export default FPShoots;

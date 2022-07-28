@@ -6,7 +6,15 @@ class UserController {
     try {
       const { name, email, password, provider } = request.body
 
-      const userService = await UserService.create({ name, email, password, provider })
+      const providerParse = JSON.parse(provider)
+
+      const userService = await UserService.create({
+        name,
+        email,
+        password,
+        provider: providerParse,
+        avatar: request.file.filename
+      })
 
       return response.status(201).json({
         name: userService.name,
@@ -18,9 +26,9 @@ class UserController {
     }
   }
 
-  async index(request: Request, response: Response) {
+  async get(request: Request, response: Response) {
     try {
-      const userService = await UserService.index(request)
+      const userService = await UserService.get(request)
 
       return response.status(201).json(userService)
     } catch (error) {

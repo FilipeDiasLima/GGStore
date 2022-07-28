@@ -1,7 +1,7 @@
 import Product from "../models/Product"
 import AppError from '../../erros/AppError'
 import User from "../models/User"
-import { Request } from "express"
+import { raw, Request } from "express"
 import { Op } from "sequelize"
 import Action from "../models/Action"
 import Adventure from "../models/Adventure"
@@ -9,6 +9,7 @@ import RPG from "../models/RPG"
 import Racing from "../models/Racing"
 import FPS from "../models/FPShoots"
 import Indy from "../models/Indy"
+import { deleteFile } from "../../utils/file"
 
 interface ProductProps {
   user_id: number
@@ -25,7 +26,6 @@ interface ProductProps {
 class ProductService {
   public async create(productRequest: ProductProps) {
     const user = await User.findByPk(productRequest.user_id)
-    console.log({ productRequest })
 
     if (!user.provider) {
       throw new AppError('Only provider users can register products.', 401);
@@ -202,6 +202,34 @@ class ProductService {
 
       return serializedProduct
     }
+  }
+
+  public async delete(request: Request) {
+    const user = await User.findByPk(request.user.id)
+
+    if (!user.provider) {
+      throw new AppError('Only provider users can register products.', 401);
+    }
+
+    const productExists = await Product.findOne({
+      where: { id: request.params.id },
+      raw: true
+    })
+
+    if (!productExists) {
+      throw new AppError('Product does not exist.')
+    }
+
+    await deleteFile(`./tmp/product/${productExists.image_cover}`)
+    await deleteFile(`./tmp/product/${productExists.image_poster}`)
+
+    const response = await Product.destroy({
+      where: { id: request.params.id }
+    })
+
+    console.log({ response })
+
+    return true
   }
 }
 

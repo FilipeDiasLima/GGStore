@@ -1,0 +1,69 @@
+.dropzone {
+  width: 150px;
+  height: 150px;
+  background: #3B3B3B;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: 0;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px dashed transparent;
+  transition: border 0.6s;
+
+  &:hover {
+    border: 2px dashed #E58D26;
+  }
+
+  >img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.6s;
+
+    &:hover {
+      -ms-transform: scale(1.04);
+      /* IE 9 */
+      -webkit-transform: scale(1.04);
+      /* Safari 3-8 */
+      transform: scale(1.04);
+    }
+  }
+
+  >p {
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    border-radius: 50%;
+    border: 1px dashed #E58D26;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    transition: all 0.3s;
+
+    >svg {
+      color: #E58D26;
+      width: 24px;
+      height: 24px;
+      margin-bottom: 8px;
+      transition: all 0.3s;
+    }
+  }
+
+  &:hover {
+
+    >p {
+      background: #ffab4b28;
+
+      >svg {
+        transform: translateY(-10px);
+      }
+    }
+  }
+}

@@ -12,13 +12,14 @@ interface UserData {
   name: string,
   email: string,
   provider: boolean,
-  avatar: string
+  avatar_url: string
 }
 
 interface AuthContextData {
   isSigned: boolean;
   user: UserData | null;
   token: string;
+  getUser(): void
   signIn(data: LoginData): Promise<void>
   logout(): void
 }
@@ -33,7 +34,7 @@ const initialUserData = {
   name: '',
   email: '',
   provider: false,
-  avatar: ''
+  avatar_url: ''
 }
 
 const AuthContext = createContext({} as AuthContextData)
@@ -65,18 +66,14 @@ export const AuthProvider = ({ children }: AuthProps) => {
     navigate('/login')
   }
 
-  useEffect(() => {
-    async function getUser() {
-      const response = await api.get('user', {
-        headers: {
-          'Authorization': `Bearer ${cookies.token}`
-        }
-      })
-      setUser(response.data[0])
-    }
-
-    getUser()
-  }, [])
+  async function getUser() {
+    const response = await api.get('user', {
+      headers: {
+        'Authorization': `Bearer ${cookies.token}`
+      }
+    })
+    setUser(response.data)
+  }
 
   useEffect(() => {
     if (cookies.token) {
@@ -90,6 +87,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
       isSigned,
       user,
       token,
+      getUser,
       signIn,
       logout
     }}>

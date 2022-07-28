@@ -24,7 +24,7 @@ class SaleController {
 
     const products = await SaleProduct.findAll({
       where: { user_id: userId, product_id: productId },
-      attributes: ['product_id', 'key']
+      attributes: ['id', 'product_id', 'key']
     })
 
     return products

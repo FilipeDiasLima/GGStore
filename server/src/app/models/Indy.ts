@@ -18,6 +18,6 @@ Indy.init(
   }
 );
 
-Indy.belongsTo(Product, { foreignKey: 'product_id', as: 'product' })
+Indy.belongsTo(Product, { foreignKey: 'product_id', as: 'product', onDelete: 'CASCADE' })
 
 export default Indy;

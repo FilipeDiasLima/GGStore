@@ -18,6 +18,6 @@ RPG.init(
   }
 );
 
-RPG.belongsTo(Product, { foreignKey: 'product_id', as: 'product' })
+RPG.belongsTo(Product, { foreignKey: 'product_id', as: 'product', onDelete: 'CASCADE' })
 
 export default RPG;

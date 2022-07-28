@@ -16,8 +16,10 @@ const SignIn = () => {
   const formRef = useRef(null);
   const { signIn } = useContext(AuthContext)
 
-  const [email, setEmail] = useState('filipe@gmail.com')
-  const [password, setPassword] = useState('123123')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  // const [email, setEmail] = useState('filipe@gmail.com')
+  // const [password, setPassword] = useState('123123')
 
   const handleSignIn = () => {
     signIn({ email, password })

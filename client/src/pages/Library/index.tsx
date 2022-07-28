@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
 import Header from '../../components/Header'
 import LibCard from '../../components/LibCard'
 import AuthContext from '../../context/auth'
@@ -13,7 +14,8 @@ interface GameProps {
 
 const Library = () => {
   const [games, setGames] = useState([])
-  const { token } = useContext(AuthContext)
+  const [cookies] = useCookies(['token'])
+  const token = cookies.token
 
   async function getGames() {
     const response = await api.get('library', {
@@ -21,7 +23,6 @@ const Library = () => {
         'Authorization': `Bearer ${token}`
       }
     })
-
     setGames(response.data)
   }
 

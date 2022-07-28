@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
 import Filter from '../../components/Filter'
 import Header from '../../components/Header'
 import MainBanner from '../../components/MainBanner'
@@ -19,8 +20,9 @@ interface SaleCardProp {
 }
 
 const Home = () => {
-  const { token } = useContext(AuthContext)
   const [games, setGames] = useState([])
+  const [cookies] = useCookies(['token'])
+  const token = cookies.token
 
   async function getGames(filtersObj: {}) {
     const response = await api.get('product', {

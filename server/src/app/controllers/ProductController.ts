@@ -6,8 +6,6 @@ class ProductController {
     try {
       const userId = Number(request.user.id)
 
-      console.log(request.body)
-
       request.body.categories = request.body.categories.split(',')
       request.body.price = Number(request.body.price)
 
@@ -28,6 +26,18 @@ class ProductController {
   async index(request: Request, response: Response) {
     try {
       const userService = await ProductService.index(request)
+
+      return response.status(201).json(userService)
+    } catch (error) {
+      return response.status(400).json({ error })
+    }
+  }
+
+  async delete(request: Request, response: Response) {
+    try {
+      const userService = await ProductService.delete(request)
+
+      console.log({ userService })
 
       return response.status(201).json(userService)
     } catch (error) {

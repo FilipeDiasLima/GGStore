@@ -4,14 +4,17 @@ import { AiOutlinePoweroff } from 'react-icons/ai';
 import { IoCartOutline, IoCartSharp, IoHeartOutline, IoHeartSharp } from 'react-icons/io5';
 import SearchBar from '../SearchBar'
 
-import avatar from '../../assets/madara.jpg'
 import styles from './styles.module.scss'
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import AuthContext from '../../context/auth';
 
 const Header = () => {
   const { pathname } = useLocation()
-  const { logout, user } = useContext(AuthContext)
+  const { logout, user, getUser } = useContext(AuthContext)
+
+  useEffect(() => {
+    getUser()
+  }, [])
 
   return (
     <header className={styles.container}>
@@ -39,7 +42,7 @@ const Header = () => {
             <IoHeartOutline size={25} />
           )}
         </Link>
-        <img src={avatar} alt="avatar" />
+        <img src={user?.avatar_url} alt="avatar" />
         <AiOutlinePoweroff size={25} onClick={logout} />
       </nav>
     </header>

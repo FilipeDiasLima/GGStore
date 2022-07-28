@@ -18,6 +18,6 @@ Adventure.init(
   }
 );
 
-Adventure.belongsTo(Product, { foreignKey: 'product_id', as: 'product' })
+Adventure.belongsTo(Product, { foreignKey: 'product_id', as: 'product', onDelete: 'CASCADE' })
 
 export default Adventure;
