@@ -96,10 +96,12 @@ class ProductService {
         raw: true
       })
 
+      const folder = product.id > 0 && product.id < 17 ? 'static' : 'tmp/product'
+
       const serializedProduct = {
         ...product,
-        poster_url: `http://localhost:3333/tmp/product/${product.image_poster}`,
-        cover_url: `http://localhost:3333/tmp/product/${product.image_cover}`,
+        poster_url: `http://localhost:3333/${folder}/${product.image_poster}`,
+        cover_url: `http://localhost:3333/${folder}/${product.image_cover}`,
       }
 
       return serializedProduct
@@ -163,11 +165,13 @@ class ProductService {
         raw: true
       })
 
+
       const serializedProduct = products.map(product => {
+        const folder = product.id > 0 && product.id < 17 ? 'static' : 'tmp/product'
         return {
           ...product,
-          poster_url: `http://localhost:3333/tmp/product/${product.image_poster}`,
-          cover_url: `http://localhost:3333/tmp/product/${product.image_cover}`,
+          poster_url: `http://localhost:3333/${folder}/${product.image_poster}`,
+          cover_url: `http://localhost:3333/${folder}/${product.image_cover}`,
         }
       })
 
@@ -187,16 +191,17 @@ class ProductService {
         order: [
           ['name', 'asc']
         ],
-        limit: 10,
-        offset: (Number(page) - 1) * 10,
+        limit: 20,
+        offset: (Number(page) - 1) * 20,
         raw: true
       })
 
       const serializedProduct = products.map(product => {
+        const folder = product.id > 0 && product.id < 17 ? 'static' : 'tmp/product'
         return {
           ...product,
-          poster_url: `http://localhost:3333/tmp/product/${product.image_poster}`,
-          cover_url: `http://localhost:3333/tmp/product/${product.image_cover}`,
+          poster_url: `http://localhost:3333/${folder}/${product.image_poster}`,
+          cover_url: `http://localhost:3333/${folder}/${product.image_cover}`,
         }
       })
 
@@ -209,6 +214,10 @@ class ProductService {
 
     if (!user.provider) {
       throw new AppError('Only provider users can register products.', 401);
+    }
+
+    if (Number(request.params.id) > 0 && Number(request.params.id) < 17) {
+      throw new AppError('Static products can be deleted.', 403);
     }
 
     const productExists = await Product.findOne({

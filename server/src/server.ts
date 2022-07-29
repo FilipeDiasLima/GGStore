@@ -13,6 +13,7 @@ app.use(cors());
 
 app.use(express.json());
 
+app.use('/static', express.static(path.resolve(__dirname, '..', 'static')));
 app.use('/tmp/avatar', express.static(path.resolve(__dirname, '..', 'tmp', 'avatar')));
 app.use('/tmp/product', express.static(path.resolve(__dirname, '..', 'tmp', 'product')));
 

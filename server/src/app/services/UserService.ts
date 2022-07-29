@@ -40,9 +40,11 @@ class UserService {
       raw: true
     })
 
+    const folder = user.email === 'admin@admin.com' ? 'static' : 'tmp/avatar'
+
     const serializedUser = {
       ...user,
-      avatar_url: `http://localhost:3333/tmp/avatar/${user.avatar}`
+      avatar_url: `http://localhost:3333/${folder}/${user.avatar}`
     }
 
     return serializedUser

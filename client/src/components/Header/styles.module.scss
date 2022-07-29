@@ -16,16 +16,26 @@
 
 .nav1 {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  width: 20%;
+
+  a {
+    &+a {
+      margin-left: 60px;
+    }
+  }
 }
 
 .nav2 {
   display: flex;
-  justify-content: space-between;
-  width: 14%;
+  justify-content: flex-end;
+  // width: 14%;
   align-items: center;
+
+  a,
+  img {
+    margin-right: 40px;
+  }
 
   svg {
     cursor: pointer;
