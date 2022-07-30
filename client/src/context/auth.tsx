@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
       email: data.email,
       password: data.password
     })
-    setCookies('token', response.data.token)
+    setCookies('token', response.data.token, { path: '/' })
     setUser(response.data.user)
     setIsSigned(true)
 

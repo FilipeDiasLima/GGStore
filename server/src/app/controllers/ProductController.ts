@@ -37,8 +37,6 @@ class ProductController {
     try {
       const userService = await ProductService.delete(request)
 
-      console.log({ userService })
-
       return response.status(201).json(userService)
     } catch (error) {
       return response.status(400).json({ error })

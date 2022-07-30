@@ -41,6 +41,7 @@ const GameScreen = () => {
   const [game, setGame] = useState<GameProps>(initalDataGame)
   const [keys, setKeys] = useState([])
   const [categories, setCategories] = useState([])
+  const [search, setSearch] = useState('')
 
   const goBack = () => {
     navigate('/library')
@@ -76,7 +77,9 @@ const GameScreen = () => {
 
   return (
     <>
-      <Header />
+      <Header
+        isDisable={true}
+      />
       <div className={styles.container}>
         <header>
           <FiArrowLeft size={24} onClick={goBack} />

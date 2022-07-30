@@ -31,6 +31,8 @@ const RegisterGame = () => {
   const [selectedFilePost, setSelectedFilePost] = useState<File>();
   const [selectedFileCover, setSelectedFileCover] = useState<File>();
 
+  const [search, setSearch] = useState('')
+
   function handleSavePost(file: File) {
     setSelectedFilePost(file)
   }
@@ -79,7 +81,9 @@ const RegisterGame = () => {
 
   return (
     <>
-      <Header />
+      <Header
+        isDisable={true}
+      />
       <div className={styles.container}>
         <div className={styles.top}>
           <div className={styles.form}>

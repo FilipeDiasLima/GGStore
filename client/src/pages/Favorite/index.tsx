@@ -5,7 +5,9 @@ import styles from './styles.module.scss'
 const Favorite = () => {
   return (
     <>
-      <Header />
+      <Header
+        isDisable={true}
+      />
       <div className={styles.container}>
         <FavCard />
         <FavCard />

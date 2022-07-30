@@ -20,9 +20,10 @@ interface SaleCardProp {
 }
 
 const Home = () => {
-  const [games, setGames] = useState([])
   const [cookies] = useCookies(['token'])
   const token = cookies.token
+  const [games, setGames] = useState([])
+  const [search, setSearch] = useState('')
 
   async function getGames(filtersObj: {}) {
     const response = await api.get('product', {
@@ -41,7 +42,10 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      <Header
+        searchGame={getGames}
+        isDisable={false}
+      />
       <div className={styles.container}>
         <Filter
           getFilters={getGames}

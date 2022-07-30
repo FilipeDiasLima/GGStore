@@ -1,10 +1,19 @@
+import { useState } from 'react'
+import { CartCard } from '../../components/CartCard'
 import Header from '../../components/Header'
+import styles from './styles.module.scss'
 
 const Cart = () => {
+
   return (
     <>
-      <Header />
-      <div>
+      <Header
+        isDisable={true}
+      />
+      <div className={styles.container}>
+        <CartCard />
+        <CartCard />
+        <CartCard />
       </div>
     </>
   )

@@ -21,7 +21,7 @@ const SaleCard = (item: SaleCardProp) => {
         }}
       >
         <div>
-          <span>R$ {item.price}</span>
+          <span>R$ {item.price.toFixed(2)}</span>
         </div>
       </div>
       <div className={styles.info}>

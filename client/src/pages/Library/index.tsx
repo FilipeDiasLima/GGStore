@@ -16,6 +16,7 @@ const Library = () => {
   const [games, setGames] = useState([])
   const [cookies] = useCookies(['token'])
   const token = cookies.token
+  const [search, setSearch] = useState('')
 
   async function getGames() {
     const response = await api.get('library', {
@@ -32,7 +33,9 @@ const Library = () => {
 
   return (
     <>
-      <Header />
+      <Header
+        isDisable={true}
+      />
       <div className={styles.container}>
         {games.map((game: GameProps) => (
           <LibCard
