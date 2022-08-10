@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { IoHeartSharp } from 'react-icons/io5'
 import styles from './styles.module.scss'
 
 interface SaleCardProp {
@@ -11,8 +13,20 @@ interface SaleCardProp {
 }
 
 const SaleCard = (item: SaleCardProp) => {
+  const [fav, setFav] = useState(false)
+
+  function handleAddFavorite() {
+    setFav(true)
+    setInterval(() => setFav(false), 2000)
+  }
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onDoubleClick={handleAddFavorite}>
+      {fav && (
+        <div className={styles.favorite}>
+          <IoHeartSharp size={55} />
+        </div>
+      )}
       <div
         className={styles.cover}
         style={{
