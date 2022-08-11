@@ -19,6 +19,7 @@ router.post('/user', uploadAvatar.single('avatar'), UserController.create)
 
 router.post('/session', SessionController.create)
 
+router.get('/product', ProductController.index)
 // rotas privadas
 router.use(ensureAuth)
 
@@ -26,7 +27,6 @@ router.get('/user', UserController.get)
 router.put('/user', uploadAvatar.single('avatar'), UserController.update)
 
 router.post('/product', uploadImageProduct.array('images', 2), ProductController.create)
-router.get('/product', ProductController.index)
 router.get('/product/:id', ProductController.index)
 router.delete('/product/:id', ProductController.delete)
 

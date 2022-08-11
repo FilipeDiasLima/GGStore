@@ -52,6 +52,7 @@ const Home = () => {
         />
         <div className={styles.main}>
           <MainBanner />
+          <p>Clique duas vezes para adicionar aos favoritos</p>
           <div className={styles.cards}>
             {games.map((game: SaleCardProp) => (
               <SaleCard

@@ -4,11 +4,13 @@ import Favorite from '../pages/Favorite';
 import GameScreen from '../pages/GameScreen';
 import Home from '../pages/Home';
 import Library from '../pages/Library';
+import Main from '../pages/Main';
 import RegisterGame from '../pages/RegisterGame';
 
 const AppRoutes = () => {
   return (
     <Routes>
+      <Route path='/' element={<Main route='store'/>} />
       <Route path='/store' element={<Home />} />
       <Route path='/library' element={<Library />} />
       <Route path='/cart' element={<Cart />} />

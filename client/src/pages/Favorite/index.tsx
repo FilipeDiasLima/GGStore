@@ -12,12 +12,6 @@ const Favorite = () => {
         <FavCard />
         <FavCard />
         <FavCard />
-        <FavCard />
-        <FavCard />
-        <FavCard />
-        <FavCard />
-        <FavCard />
-        <FavCard />
       </div>
     </>
   )
