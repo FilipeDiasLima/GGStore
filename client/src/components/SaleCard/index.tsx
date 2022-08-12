@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { IoHeartSharp } from 'react-icons/io5'
+import AuthContext from '../../context/auth'
 import styles from './styles.module.scss'
 
 interface SaleCardProp {
@@ -13,6 +14,7 @@ interface SaleCardProp {
 }
 
 const SaleCard = (item: SaleCardProp) => {
+  const { addItemToCart } = useContext(AuthContext)
   const [fav, setFav] = useState(false)
 
   function handleAddFavorite() {
@@ -42,7 +44,7 @@ const SaleCard = (item: SaleCardProp) => {
         <strong>{item.name}</strong>
         <span>{item.plataform}</span>
       </div>
-      <button type='button'>COMPRAR</button>
+      <button type='button' onClick={() => addItemToCart(item.id)}>COMPRAR</button>
     </div>
   )
 }

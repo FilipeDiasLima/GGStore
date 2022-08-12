@@ -1,11 +1,24 @@
+import { useContext } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import image from '../../assets/god-of-war.png'
+import AuthContext from '../../context/auth'
 import styles from './styles.module.scss'
 
-export const CartCard = () => {
+interface CartCardProp {
+  id: number
+  name: string
+  price: number
+  image_cover: string
+  plataform: string
+  studio: string
+  release: string
+}
 
-  const handleRemoveGame = () => {
+export const CartCard = (item: CartCardProp) => {
+  const { removeItemFromCart } = useContext(AuthContext)
 
+  const handleRemoveGame = (id: number) => {
+    removeItemFromCart(id)
   }
 
   return (
@@ -13,12 +26,12 @@ export const CartCard = () => {
       <div>
         <img src={image} alt="" />
         <div>
-          <strong>God of War</strong>
-          <span>PC</span>
-          <p>R$ 65.99</p>
+          <strong>{item.name}</strong>
+          <span>{item.plataform}</span>
+          <p>R$ {item.price}</p>
         </div>
       </div>
-      <button type='button' onClick={handleRemoveGame}>
+      <button type='button' onClick={() => handleRemoveGame(item.id)}>
         <IoMdClose />
       </button>
     </div>

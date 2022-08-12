@@ -1,10 +1,32 @@
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Button from '../../components/Button'
 import { CartCard } from '../../components/CartCard'
 import Header from '../../components/Header'
+import AuthContext from '../../context/auth'
+import { api } from '../../services/api'
 import styles from './styles.module.scss'
 
 const Cart = () => {
+  const { cartItems, token } = useContext(AuthContext)
+  const [games, setGames] = useState<any[]>([])
+
+  async function getGames(id: number) {
+    const responseProduct = await api.get(`product/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    setGames([...games, responseProduct.data])
+  }
+
+  useEffect(() => {
+    console.log(cartItems)
+    cartItems.map(id => {
+      getGames(id)
+    })
+  }, [])
+
+  console.log(games)
 
   return (
     <>
@@ -13,9 +35,7 @@ const Cart = () => {
       />
       <div className={styles.container}>
         <div>
-          <CartCard />
-          <CartCard />
-          <CartCard />
+          {/* <CartCard /> */}
         </div>
         <div className={styles.priceInfo}>
           <div className={styles.inputContainer}>

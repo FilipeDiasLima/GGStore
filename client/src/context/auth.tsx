@@ -16,12 +16,15 @@ interface UserData {
 }
 
 interface AuthContextData {
-  isSigned: boolean;
-  user: UserData | null;
-  token: string;
+  isSigned: boolean
+  user: UserData | null
+  token: string
+  cartItems: number[]
   getUser(): void
   signIn(data: LoginData): Promise<void>
   logout(): void
+  addItemToCart(id: number): void
+  removeItemFromCart(id: number): void
 }
 
 interface LoginData {
@@ -41,12 +44,24 @@ const AuthContext = createContext({} as AuthContextData)
 
 export const AuthProvider = ({ children }: AuthProps) => {
   const [cookies, setCookies, removeCookie] = useCookies(['token'])
-
+  
   const [token, setToken] = useState('')
   const [isSigned, setIsSigned] = useState(false)
   const [user, setUser] = useState(initialUserData)
+  const [cartItems, setCartItems] = useState<number[]>([])
 
   const navigate = useNavigate()
+
+  function addItemToCart(itemId: number) {
+    setCartItems([...cartItems, itemId])
+  }
+
+  function removeItemFromCart(itemId: number) {
+    let filtered = cartItems.filter((value, index, arr) => { 
+      return value !== itemId ;
+    });
+    setCartItems(filtered)
+  }
 
   async function signIn(data: LoginData) {
     const response = await api.post('/session', {
@@ -87,9 +102,12 @@ export const AuthProvider = ({ children }: AuthProps) => {
       isSigned,
       user,
       token,
+      cartItems,
       getUser,
       signIn,
-      logout
+      logout,
+      addItemToCart,
+      removeItemFromCart
     }}>
       <CookiesProvider>
         {children}
