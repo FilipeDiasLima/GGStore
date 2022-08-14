@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import { IoMdClose } from 'react-icons/io'
-import image from '../../assets/god-of-war.png'
 import AuthContext from '../../context/auth'
 import styles from './styles.module.scss'
 
@@ -8,10 +7,8 @@ interface CartCardProp {
   id: number
   name: string
   price: number
-  image_cover: string
+  cover_url: string
   plataform: string
-  studio: string
-  release: string
 }
 
 export const CartCard = (item: CartCardProp) => {
@@ -24,11 +21,11 @@ export const CartCard = (item: CartCardProp) => {
   return (
     <div className={styles.container}>
       <div>
-        <img src={image} alt="" />
+        <img src={item.cover_url} alt="" />
         <div>
           <strong>{item.name}</strong>
           <span>{item.plataform}</span>
-          <p>R$ {item.price}</p>
+          <p>R$ {item.price.toFixed(2)}</p>
         </div>
       </div>
       <button type='button' onClick={() => handleRemoveGame(item.id)}>

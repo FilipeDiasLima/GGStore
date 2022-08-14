@@ -6,28 +6,37 @@ import AuthContext from '../../context/auth'
 import { api } from '../../services/api'
 import styles from './styles.module.scss'
 
+interface CartCardProp {
+  id: number
+  name: string
+  price: number
+  cover_url: string
+  plataform: string
+}
+
 const Cart = () => {
   const { cartItems, token } = useContext(AuthContext)
   const [games, setGames] = useState<any[]>([])
 
-  async function getGames(id: number) {
-    const responseProduct = await api.get(`product/${id}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
+  async function getGames() {
+    let arr: any = []
+    cartItems.map(async id => {
+      const responseProduct = await api.get(`product/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      arr.push(responseProduct.data)
     })
-    setGames([...games, responseProduct.data])
+    setGames([...games, arr])
   }
 
   useEffect(() => {
-    console.log(cartItems)
-    cartItems.map(id => {
-      getGames(id)
-    })
+    getGames()
   }, [])
 
+  console.log(cartItems)
   console.log(games)
-
   return (
     <>
       <Header
@@ -35,7 +44,16 @@ const Cart = () => {
       />
       <div className={styles.container}>
         <div>
-          {/* <CartCard /> */}
+          {games[0].map((game: CartCardProp) => (
+            <CartCard
+              id={game.id}
+              name={game.name}
+              cover_url={game.cover_url}
+              plataform={game.plataform}
+              price={game.price}
+              key={game.id}
+            />
+          ))}
         </div>
         <div className={styles.priceInfo}>
           <div className={styles.inputContainer}>
