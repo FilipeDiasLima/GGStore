@@ -17,26 +17,30 @@ interface CartCardProp {
 const Cart = () => {
   const { cartItems, token } = useContext(AuthContext)
   const [games, setGames] = useState<any[]>([])
+  const [isReload, setIsReload] = useState<boolean>(false)
 
   async function getGames() {
     let arr: any = []
-    cartItems.map(async id => {
+    cartItems?.map(async id => {
       const responseProduct = await api.get(`product/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
       arr.push(responseProduct.data)
+      console.log(arr)
+      if (arr.length > 0) setGames([...games, arr])
     })
-    setGames([...games, arr])
   }
 
   useEffect(() => {
     getGames()
-  }, [])
+  }, [isReload])
 
-  console.log(cartItems)
-  console.log(games)
+  setTimeout(() => {
+    setIsReload(true)
+  }, 500)
+
   return (
     <>
       <Header
@@ -44,7 +48,7 @@ const Cart = () => {
       />
       <div className={styles.container}>
         <div>
-          {games[0].map((game: CartCardProp) => (
+          {games[0]?.map((game: CartCardProp) => (
             <CartCard
               id={game.id}
               name={game.name}
@@ -52,6 +56,7 @@ const Cart = () => {
               plataform={game.plataform}
               price={game.price}
               key={game.id}
+              reload={() => setIsReload(false)}
             />
           ))}
         </div>
@@ -81,7 +86,10 @@ const Cart = () => {
           </div>
 
           <button type="button" className={styles.applyButton}>
-            Checkout
+            Pagar
+          </button>
+          <button type="button" onClick={getGames} className={styles.applyButton}>
+            Recarregar o carrinho
           </button>
         </div>
       </div>

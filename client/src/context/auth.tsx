@@ -44,7 +44,7 @@ const AuthContext = createContext({} as AuthContextData)
 
 export const AuthProvider = ({ children }: AuthProps) => {
   const [cookies, setCookies, removeCookie] = useCookies(['token'])
-  
+
   const [token, setToken] = useState('')
   const [isSigned, setIsSigned] = useState(false)
   const [user, setUser] = useState(initialUserData)
@@ -53,12 +53,16 @@ export const AuthProvider = ({ children }: AuthProps) => {
   const navigate = useNavigate()
 
   function addItemToCart(itemId: number) {
-    setCartItems([...cartItems, itemId])
+    let idFound = false
+    cartItems.map(id => {
+      if (id === itemId) idFound = true
+    })
+    if (!idFound) setCartItems([...cartItems, itemId])
   }
 
   function removeItemFromCart(itemId: number) {
-    let filtered = cartItems.filter((value, index, arr) => { 
-      return value !== itemId ;
+    let filtered = cartItems.filter((value, index, arr) => {
+      return value !== itemId;
     });
     setCartItems(filtered)
   }
