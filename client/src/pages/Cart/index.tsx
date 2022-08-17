@@ -1,45 +1,22 @@
 import { useContext, useEffect, useState } from 'react'
-import Button from '../../components/Button'
 import { CartCard } from '../../components/CartCard'
 import Header from '../../components/Header'
 import AuthContext from '../../context/auth'
 import { api } from '../../services/api'
 import styles from './styles.module.scss'
 
-interface CartCardProp {
-  id: number
-  name: string
-  price: number
-  cover_url: string
-  plataform: string
-}
-
 const Cart = () => {
-  const { cartItems, token } = useContext(AuthContext)
-  const [games, setGames] = useState<any[]>([])
-  const [isReload, setIsReload] = useState<boolean>(false)
+  const { cartItems } = useContext(AuthContext)
+  const [subtotal, setSubtotal] = useState(0)
+  const [discount, setDiscount] = useState(0)
+  const [promocode, setPromocode] = useState(0)
+  const [total, setTotal] = useState(0)
 
-  async function getGames() {
-    let arr: any = []
-    cartItems?.map(async id => {
-      const responseProduct = await api.get(`product/${id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      arr.push(responseProduct.data)
-      console.log(arr)
-      if (arr.length > 0) setGames([...games, arr])
-    })
+  function updateSubtotal(value: number) {
+    const sub = subtotal + value
+    console.log(sub)
+    setSubtotal(subtotal + value)
   }
-
-  useEffect(() => {
-    getGames()
-  }, [isReload])
-
-  setTimeout(() => {
-    setIsReload(true)
-  }, 500)
 
   return (
     <>
@@ -48,15 +25,11 @@ const Cart = () => {
       />
       <div className={styles.container}>
         <div>
-          {games[0]?.map((game: CartCardProp) => (
+          {cartItems.map((id: number) => (
             <CartCard
-              id={game.id}
-              name={game.name}
-              cover_url={game.cover_url}
-              plataform={game.plataform}
-              price={game.price}
-              key={game.id}
-              reload={() => setIsReload(false)}
+              id={id}
+              key={id}
+              updateSubtotal={updateSubtotal}
             />
           ))}
         </div>
@@ -67,29 +40,26 @@ const Cart = () => {
           </div>
           <div className={styles.info}>
             <span>Subtotal</span>
-            <strong>R$ 200,00</strong>
+            <strong>R$ {subtotal.toFixed(2)}</strong>
           </div>
           <div className={styles.info}>
             <span>Desconto</span>
-            <strong>R$ 00,00</strong>
+            <strong>R$ {discount.toFixed(2)}</strong>
           </div>
           <div className={styles.info}>
             <span>Promocode</span>
-            <strong>R$ 00,00</strong>
+            <strong>R$ {promocode.toFixed(2)}</strong>
           </div>
 
           <div className={styles.line} />
 
           <div className={styles.total}>
             <span>Total</span>
-            <strong>R$ 200,00</strong>
+            <strong>R$ {total.toFixed(2)}</strong>
           </div>
 
           <button type="button" className={styles.applyButton}>
             Pagar
-          </button>
-          <button type="button" onClick={getGames} className={styles.applyButton}>
-            Recarregar o carrinho
           </button>
         </div>
       </div>
