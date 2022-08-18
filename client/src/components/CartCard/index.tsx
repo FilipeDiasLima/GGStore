@@ -7,7 +7,8 @@ import styles from './styles.module.scss'
 
 interface CartCardProp {
   id: number
-  updateSubtotal: (value: number) => void
+  index: number
+  subtotalItem: (value: number, index: number) => void
 }
 
 interface GameProp {
@@ -27,10 +28,11 @@ const initialGameProp = {
 }
 
 
-export const CartCard = ({ id, updateSubtotal }: CartCardProp) => {
+export const CartCard = ({ id, subtotalItem, index }: CartCardProp) => {
   const { removeItemFromCart, token } = useContext(AuthContext)
   const [amount, setAmount] = useState(1)
   const [data, setData] = useState<GameProp>(initialGameProp)
+  const [totalPriceItem, setTotalPriceItem] = useState(0)
 
   async function getGames() {
     const responseProduct = await api.get(`product/${id}`, {
@@ -39,7 +41,7 @@ export const CartCard = ({ id, updateSubtotal }: CartCardProp) => {
       }
     })
     setData(responseProduct.data)
-    updateSubtotal(responseProduct.data!.price * amount)
+    setTotalPriceItem(responseProduct.data.price)
   }
 
   const handleRemoveGame = (id: number) => {
@@ -49,12 +51,14 @@ export const CartCard = ({ id, updateSubtotal }: CartCardProp) => {
   function handleSubAmount() {
     if (amount >= 1) {
       setAmount(amount - 1)
+      setTotalPriceItem(totalPriceItem - data!.price)
     }
   }
 
   function handleAddAmount() {
     if (amount <= 9) {
       setAmount(amount + 1)
+      setTotalPriceItem(totalPriceItem + data!.price)
     }
   }
 
@@ -63,8 +67,8 @@ export const CartCard = ({ id, updateSubtotal }: CartCardProp) => {
   }, [])
 
   useEffect(() => {
-    updateSubtotal(data!.price * amount)
-  }, [amount, data])
+    subtotalItem(totalPriceItem, index)
+  }, [totalPriceItem])
 
   return (
     <div className={styles.container}>
@@ -74,7 +78,7 @@ export const CartCard = ({ id, updateSubtotal }: CartCardProp) => {
           <strong>{data?.name}</strong>
           <span>{data?.plataform}</span>
           <div>
-            <p>R$ {data?.price.toFixed(2)}</p>
+            <p>R$ {Math.abs(totalPriceItem).toFixed(2)}</p>
             <div className={styles.amount}>
               <button><IoRemoveOutline size={20} color='#fff' onClick={handleSubAmount} /></button>
               {amount}

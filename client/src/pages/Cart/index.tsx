@@ -11,12 +11,20 @@ const Cart = () => {
   const [discount, setDiscount] = useState(0)
   const [promocode, setPromocode] = useState(0)
   const [total, setTotal] = useState(0)
+  const [subtotalArr, setSubtotalArr] = useState<number[]>(cartItems)
 
-  function updateSubtotal(value: number) {
-    const sub = subtotal + value
-    console.log(sub)
-    setSubtotal(subtotal + value)
+  function updateSubtotal(value: number, index: number) {
+    let copy = subtotalArr
+    copy[index] = value
+    setSubtotalArr(copy)
   }
+
+  console.log(subtotalArr)
+
+  useEffect(() => {
+    const result = subtotalArr.reduce((partialSum: number, item: number) => partialSum + item, 0)
+    setSubtotal(result)
+  }, [subtotalArr])
 
   return (
     <>
@@ -25,11 +33,12 @@ const Cart = () => {
       />
       <div className={styles.container}>
         <div>
-          {cartItems.map((id: number) => (
+          {cartItems.map((id: number, index) => (
             <CartCard
               id={id}
-              key={id}
-              updateSubtotal={updateSubtotal}
+              key={index}
+              index={index}
+              subtotalItem={updateSubtotal}
             />
           ))}
         </div>
