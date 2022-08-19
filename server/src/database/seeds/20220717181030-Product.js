@@ -195,6 +195,90 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        user_id: 1,
+        name: "fallout 4",
+        price: 23.20,
+        image_cover: "fallout4-cover.jpg",
+        image_poster: "fallout4-thumb.jpg",
+        plataform: "pc",
+        studio: "bethesda game studios",
+        release: "10/11/2015",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        user_id: 1,
+        name: "hunt",
+        price: 89.90,
+        image_cover: "hunt-cover.jpg",
+        image_poster: "hunt-thumb.jpg",
+        plataform: "pc",
+        studio: "Crytek",
+        release: "27/08/2019",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        user_id: 1,
+        name: "outer wilds",
+        price: 28.90,
+        image_cover: "outer-cover.webp",
+        image_poster: "outer-thumb.jpg",
+        plataform: "pc",
+        studio: "mobius digital",
+        release: "18/06/2020",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        user_id: 1,
+        name: "pubg",
+        price: 0,
+        image_cover: "pubg-cover.jpg",
+        image_poster: "pubg-thumb.png",
+        plataform: "pc",
+        studio: "krafton, inc.",
+        release: "21/12/2017",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        user_id: 1,
+        name: "spider-man remastered",
+        price: 200,
+        image_cover: "spider-man-cover.jfif",
+        image_poster: "spider-man-thumb.jpg",
+        plataform: "pc",
+        studio: "insomniac games, nixxes software",
+        release: "12/08/2022",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        user_id: 1,
+        name: "death stranding",
+        price: 100,
+        image_cover: "stranding-cover.jpg",
+        image_poster: "stranding-thumb.jpg",
+        plataform: "pc",
+        studio: "kojima productions",
+        release: "14/06/2020",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        user_id: 1,
+        name: "the witcher 3: wild hunt",
+        price: 29,
+        image_cover: "witcher-cover.webp",
+        image_poster: "witcher-thumb.png",
+        plataform: "pc",
+        studio: "cd projekt red",
+        release: "18/05/2015",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ], {});
   },
 

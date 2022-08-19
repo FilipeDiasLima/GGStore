@@ -11,20 +11,29 @@ const Cart = () => {
   const [discount, setDiscount] = useState(0)
   const [promocode, setPromocode] = useState(0)
   const [total, setTotal] = useState(0)
+  const [changeAmount, setChangeAmount] = useState(false)
   const [subtotalArr, setSubtotalArr] = useState<number[]>(cartItems)
 
   function updateSubtotal(value: number, index: number) {
+    setChangeAmount(!changeAmount)
     let copy = subtotalArr
     copy[index] = value
     setSubtotalArr(copy)
   }
 
-  console.log(subtotalArr)
+  useEffect(() => {
+    setSubtotalArr(cartItems)
+  }, [cartItems])
 
   useEffect(() => {
     const result = subtotalArr.reduce((partialSum: number, item: number) => partialSum + item, 0)
     setSubtotal(result)
-  }, [subtotalArr])
+  }, [changeAmount])
+
+  useEffect(() => {
+    const result = subtotal - discount - promocode
+    setTotal(result)
+  }, [, subtotal, discount, promocode])
 
   return (
     <>

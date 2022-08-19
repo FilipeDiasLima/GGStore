@@ -46,6 +46,7 @@ export const CartCard = ({ id, subtotalItem, index }: CartCardProp) => {
 
   const handleRemoveGame = (id: number) => {
     removeItemFromCart(id)
+    setTotalPriceItem(0)
   }
 
   function handleSubAmount() {

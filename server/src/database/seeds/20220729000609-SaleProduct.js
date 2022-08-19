@@ -115,6 +115,55 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        user_id: 1,
+        product_id: 17,
+        key: 'm7Jay-jvg3K-5GUhO-K39Nr',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        user_id: 1,
+        product_id: 18,
+        key: 'm7Jay-jvg3K-5GUhO-K39Nr',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        user_id: 1,
+        product_id: 19,
+        key: 'm7Jay-jvg3K-5GUhO-K39Nr',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        user_id: 1,
+        product_id: 20,
+        key: 'm7Jay-jvg3K-5GUhO-K39Nr',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        user_id: 1,
+        product_id: 21,
+        key: 'm7Jay-jvg3K-5GUhO-K39Nr',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        user_id: 1,
+        product_id: 22,
+        key: 'm7Jay-jvg3K-5GUhO-K39Nr',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        user_id: 1,
+        product_id: 23,
+        key: 'm7Jay-jvg3K-5GUhO-K39Nr',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ], {});
   },
 

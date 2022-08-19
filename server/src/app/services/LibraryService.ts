@@ -27,7 +27,7 @@ class LibraryService {
     })
 
     const serializedProduct = products.map((product: any, index: number) => {
-      const folder = product.id > 0 && product.id < 17 ? 'static' : 'tmp/product'
+      const folder = product.id > 0 && product.id < 24 ? 'static' : 'tmp/product'
       return {
         ...product,
         poster_url: `http://localhost:3333/${folder}/${product.image_poster}`,

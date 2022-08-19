@@ -48,6 +48,31 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        product_id: 17,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product_id: 18,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product_id: 20,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product_id: 21,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product_id: 23,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ], {});
   },
 
