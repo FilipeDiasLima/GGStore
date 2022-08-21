@@ -26,7 +26,8 @@
   }
 }
 
-.slider, .slider1 {
+.slider,
+.slider1 {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -63,7 +64,7 @@
 .slider .slide_track {
   animation: scroll 80s linear infinite;
   display: flex;
-  width: calc(250px * 18);
+  width: calc(350px * 18);
 }
 
 .slide {
@@ -75,7 +76,7 @@
   font-size: 60px;
   color: #FFF;
 
-  > strong {
+  >strong {
     color: #E58D26;
   }
 }
@@ -140,5 +141,5 @@
 .slider .slide_track1 {
   animation: scrollReverse 80s linear infinite;
   display: flex;
-  width: calc(250px * 18);
+  width: calc(350px * 18);
 }

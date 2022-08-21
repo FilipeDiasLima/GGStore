@@ -1,39 +1,27 @@
 import { useContext, useEffect, useState } from 'react'
 import { CartCard } from '../../components/CartCard'
 import Header from '../../components/Header'
-import AuthContext from '../../context/auth'
-import { api } from '../../services/api'
+import AuthContext, { GameCartProp } from '../../context/auth'
 import styles from './styles.module.scss'
 
 const Cart = () => {
-  const { cartItems } = useContext(AuthContext)
+  const { cartGames } = useContext(AuthContext)
   const [subtotal, setSubtotal] = useState(0)
   const [discount, setDiscount] = useState(0)
   const [promocode, setPromocode] = useState(0)
   const [total, setTotal] = useState(0)
-  const [changeAmount, setChangeAmount] = useState(false)
-  const [subtotalArr, setSubtotalArr] = useState<number[]>(cartItems)
-
-  function updateSubtotal(value: number, index: number) {
-    setChangeAmount(!changeAmount)
-    let copy = subtotalArr
-    copy[index] = value
-    setSubtotalArr(copy)
-  }
 
   useEffect(() => {
-    setSubtotalArr(cartItems)
-  }, [cartItems])
-
-  useEffect(() => {
-    const result = subtotalArr.reduce((partialSum: number, item: number) => partialSum + item, 0)
-    setSubtotal(result)
-  }, [changeAmount])
+    const sum = cartGames.reduce((sum, item) => {
+      return sum + item.subtotal
+    }, 0)
+    setSubtotal(sum)
+  }, [cartGames])
 
   useEffect(() => {
     const result = subtotal - discount - promocode
     setTotal(result)
-  }, [, subtotal, discount, promocode])
+  }, [, subtotal, cartGames, discount, promocode])
 
   return (
     <>
@@ -42,12 +30,15 @@ const Cart = () => {
       />
       <div className={styles.container}>
         <div>
-          {cartItems.map((id: number, index) => (
+          {cartGames.map((item: GameCartProp) => (
             <CartCard
-              id={id}
-              key={index}
-              index={index}
-              subtotalItem={updateSubtotal}
+              key={item.id}
+              id={item.id}
+              cover_url={item.cover_url}
+              name={item.name}
+              plataform={item.plataform}
+              price={item.price}
+              subtotal={item.subtotal}
             />
           ))}
         </div>

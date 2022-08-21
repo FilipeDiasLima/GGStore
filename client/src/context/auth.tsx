@@ -15,18 +15,6 @@ interface UserData {
   avatar_url: string
 }
 
-interface AuthContextData {
-  isSigned: boolean
-  user: UserData | null
-  token: string
-  cartItems: number[]
-  getUser(): void
-  signIn(data: LoginData): Promise<void>
-  logout(): void
-  addItemToCart(id: number): void
-  removeItemFromCart(id: number): void
-}
-
 interface LoginData {
   email: string
   password: string
@@ -40,6 +28,28 @@ const initialUserData = {
   avatar_url: ''
 }
 
+export interface GameCartProp {
+  id: number
+  name: string
+  price: number
+  cover_url: string
+  plataform: string
+  subtotal: number
+}
+
+interface AuthContextData {
+  isSigned: boolean
+  user: UserData | null
+  token: string
+  cartGames: GameCartProp[]
+  getUser(): void
+  signIn(data: LoginData): Promise<void>
+  logout(): void
+  addItemToCart(id: number): void
+  removeItemFromCart(id: number): void
+  updateSubTotal(value: number, id: number): void
+}
+
 const AuthContext = createContext({} as AuthContextData)
 
 export const AuthProvider = ({ children }: AuthProps) => {
@@ -48,23 +58,41 @@ export const AuthProvider = ({ children }: AuthProps) => {
   const [token, setToken] = useState('')
   const [isSigned, setIsSigned] = useState(false)
   const [user, setUser] = useState(initialUserData)
-  const [cartItems, setCartItems] = useState<number[]>([])
+  const [cartGames, setCartGames] = useState<GameCartProp[]>([])
 
   const navigate = useNavigate()
 
+  function updateSubTotal(value: number, id: number) {
+    const newArr = cartGames.map(item => {
+      if (item.id == id) return { ...item, subtotal: value }
+      return item
+    })
+    setCartGames(newArr)
+  }
+
   function addItemToCart(itemId: number) {
     let idFound = false
-    cartItems.map(id => {
-      if (id === itemId) idFound = true
+    cartGames.map((item: GameCartProp) => {
+      if (item.id === itemId) idFound = true
     })
-    if (!idFound) setCartItems([...cartItems, itemId])
+    if (!idFound) getGame(itemId)
   }
 
   function removeItemFromCart(itemId: number) {
-    let filtered = cartItems.filter((value, index, arr) => {
-      return value !== itemId;
+    const filtered = cartGames.filter((value, index, arr) => {
+      return value.id !== itemId;
     });
-    setCartItems(filtered)
+    setCartGames(filtered)
+  }
+
+  async function getGame(id: number) {
+    const responseProduct = await api.get(`product/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    const game = { ...responseProduct.data, subtotal: responseProduct.data?.price }
+    setCartGames([...cartGames, game])
   }
 
   async function signIn(data: LoginData) {
@@ -106,12 +134,13 @@ export const AuthProvider = ({ children }: AuthProps) => {
       isSigned,
       user,
       token,
-      cartItems,
+      cartGames,
       getUser,
       signIn,
       logout,
       addItemToCart,
-      removeItemFromCart
+      removeItemFromCart,
+      updateSubTotal
     }}>
       <CookiesProvider>
         {children}

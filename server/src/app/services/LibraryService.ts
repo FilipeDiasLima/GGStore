@@ -14,7 +14,7 @@ class LibraryService {
     const sales = await SaleProduct.findAll({
       where: { user_id: userId },
       attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('product_id')), 'product_id'],],
-      raw: true
+      raw: true,
     })
 
     sales.map(sale => {
@@ -23,7 +23,10 @@ class LibraryService {
 
     const products = await Product.findAll({
       where: { id: arr },
-      raw: true
+      raw: true,
+      order: [
+        ['name', 'asc']
+      ]
     })
 
     const serializedProduct = products.map((product: any, index: number) => {
