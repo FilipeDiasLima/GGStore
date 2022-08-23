@@ -191,8 +191,8 @@ class ProductService {
         order: [
           ['name', 'asc']
         ],
-        limit: 20,
-        offset: (Number(page) - 1) * 20,
+        limit: 50,
+        offset: (Number(page) - 1) * 50,
         raw: true
       })
 

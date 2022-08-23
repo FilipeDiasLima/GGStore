@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { setTimeout } from 'timers/promises'
+import { CartModal } from '../../components/CartModal'
 import Filter from '../../components/Filter'
 import Header from '../../components/Header'
 import MainBanner from '../../components/MainBanner'
@@ -24,6 +26,7 @@ const Home = () => {
   const token = cookies.token
   const [games, setGames] = useState([])
   const [search, setSearch] = useState('')
+  const [isOpenCartModal, setIsOpenCartModal] = useState(false)
 
   async function getGames(filtersObj: {}) {
     const response = await api.get('product', {
@@ -34,6 +37,11 @@ const Home = () => {
     })
 
     setGames(response.data)
+  }
+
+  function handleOpenCartModal() {
+    setIsOpenCartModal(true)
+    // setInterval(() => setIsOpenCartModal(false), 2000)
   }
 
   useEffect(() => {
@@ -47,6 +55,7 @@ const Home = () => {
         isDisable={false}
       />
       <div className={styles.container}>
+        {isOpenCartModal && <CartModal closeModal={() => setIsOpenCartModal(false)} />}
         <Filter
           getFilters={getGames}
         />
@@ -64,6 +73,7 @@ const Home = () => {
                 price={game.price}
                 release={game.release}
                 studio={game.studio}
+                openModal={handleOpenCartModal}
               />
             ))}
           </div>

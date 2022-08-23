@@ -1,17 +1,10 @@
 import styles from './styles.module.scss'
-import capa from '../../assets/god-of-war.png'
-import { useNavigate } from 'react-router-dom'
 import { IoMdClose } from 'react-icons/io'
 import AuthContext, { GameCartProp } from '../../context/auth'
 import { useContext } from 'react'
 
-const FavCard = ({ id, cover_url, name, plataform, price }: GameCartProp) => {
-  const navigate = useNavigate()
+const FavCard = ({ id, cover_url, name }: GameCartProp) => {
   const { removeItemFromFav, addItemToCart } = useContext(AuthContext)
-
-  const handleRemoveFavGame = () => {
-
-  }
 
   return (
     <div className={styles.container}>

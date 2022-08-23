@@ -11,6 +11,7 @@ interface SaleCardProp {
   plataform: string
   studio: string
   release: string
+  openModal: () => void
 }
 
 const SaleCard = (item: SaleCardProp) => {
@@ -21,6 +22,11 @@ const SaleCard = (item: SaleCardProp) => {
     setFav(true)
     setInterval(() => setFav(false), 2000)
     addItemToFav(id)
+  }
+
+  function handleAddCart(id: number) {
+    addItemToCart(id)
+    item.openModal()
   }
 
   return (
@@ -45,7 +51,7 @@ const SaleCard = (item: SaleCardProp) => {
         <strong>{item.name}</strong>
         <span>{item.plataform}</span>
       </div>
-      <button type='button' onClick={() => addItemToCart(item.id)}>COMPRAR</button>
+      <button type='button' onClick={() => handleAddCart(item.id)}>COMPRAR</button>
     </div>
   )
 }

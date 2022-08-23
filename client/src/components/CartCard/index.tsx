@@ -9,7 +9,7 @@ export const CartCard = ({ id, cover_url, name, plataform, price }: GameCartProp
   const [amount, setAmount] = useState(1)
 
   function handleSubAmount() {
-    if (amount > 0) setAmount(amount - 1)
+    if (amount > 1) setAmount(amount - 1)
   }
 
   function handleAddAmount() {
