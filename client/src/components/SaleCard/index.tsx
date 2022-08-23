@@ -14,16 +14,17 @@ interface SaleCardProp {
 }
 
 const SaleCard = (item: SaleCardProp) => {
-  const { addItemToCart } = useContext(AuthContext)
+  const { addItemToCart, addItemToFav } = useContext(AuthContext)
   const [fav, setFav] = useState(false)
 
-  function handleAddFavorite() {
+  function handleAddFavorite(id: number) {
     setFav(true)
     setInterval(() => setFav(false), 2000)
+    addItemToFav(id)
   }
 
   return (
-    <div className={styles.container} onDoubleClick={handleAddFavorite}>
+    <div className={styles.container} onDoubleClick={() => handleAddFavorite(item.id)}>
       {fav && (
         <div className={styles.favorite}>
           <IoHeartSharp size={55} />

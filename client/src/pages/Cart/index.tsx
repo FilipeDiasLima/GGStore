@@ -13,7 +13,7 @@ const Cart = () => {
 
   useEffect(() => {
     const sum = cartGames.reduce((sum, item) => {
-      return sum + item.subtotal
+      return sum + item.subtotal!
     }, 0)
     setSubtotal(sum)
   }, [cartGames])

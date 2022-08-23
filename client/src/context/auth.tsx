@@ -34,18 +34,21 @@ export interface GameCartProp {
   price: number
   cover_url: string
   plataform: string
-  subtotal: number
+  subtotal?: number
 }
 
 interface AuthContextData {
   isSigned: boolean
   user: UserData | null
   token: string
+  favGames: GameCartProp[]
   cartGames: GameCartProp[]
   getUser(): void
   signIn(data: LoginData): Promise<void>
   logout(): void
+  addItemToFav(id: number): void
   addItemToCart(id: number): void
+  removeItemFromFav(id: number): void
   removeItemFromCart(id: number): void
   updateSubTotal(value: number, id: number): void
 }
@@ -59,6 +62,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
   const [isSigned, setIsSigned] = useState(false)
   const [user, setUser] = useState(initialUserData)
   const [cartGames, setCartGames] = useState<GameCartProp[]>([])
+  const [favGames, setFavGames] = useState<GameCartProp[]>([])
 
   const navigate = useNavigate()
 
@@ -72,10 +76,18 @@ export const AuthProvider = ({ children }: AuthProps) => {
 
   function addItemToCart(itemId: number) {
     let idFound = false
-    cartGames.map((item: GameCartProp) => {
+    cartGames.map((item) => {
       if (item.id === itemId) idFound = true
     })
-    if (!idFound) getGame(itemId)
+    if (!idFound) getGame(itemId, 0)
+  }
+
+  function addItemToFav(itemId: number) {
+    let idFound = false
+    favGames.map((item) => {
+      if (item.id === itemId) idFound = true
+    })
+    if (!idFound) getGame(itemId, 1)
   }
 
   function removeItemFromCart(itemId: number) {
@@ -85,14 +97,22 @@ export const AuthProvider = ({ children }: AuthProps) => {
     setCartGames(filtered)
   }
 
-  async function getGame(id: number) {
+  function removeItemFromFav(itemId: number) {
+    const filtered = favGames.filter((value, index, arr) => {
+      return value.id !== itemId;
+    });
+    setFavGames(filtered)
+  }
+
+  async function getGame(id: number, type: number) {
     const responseProduct = await api.get(`product/${id}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     })
     const game = { ...responseProduct.data, subtotal: responseProduct.data?.price }
-    setCartGames([...cartGames, game])
+    type === 0 && setCartGames([...cartGames, game])
+    type === 1 && setFavGames([...favGames, game])
   }
 
   async function signIn(data: LoginData) {
@@ -134,13 +154,16 @@ export const AuthProvider = ({ children }: AuthProps) => {
       isSigned,
       user,
       token,
+      favGames,
       cartGames,
       getUser,
       signIn,
       logout,
       addItemToCart,
       removeItemFromCart,
-      updateSubTotal
+      updateSubTotal,
+      addItemToFav,
+      removeItemFromFav
     }}>
       <CookiesProvider>
         {children}
