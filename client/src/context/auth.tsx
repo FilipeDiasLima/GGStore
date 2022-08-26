@@ -157,11 +157,11 @@ export const AuthProvider = ({ children }: AuthProps) => {
       setIsSigned(true)
       setToken(cookies.token)
     }
-    if (cookies.cart.length > 0) {
+    if (cookies.cart && cookies.cart.length > 0) {
       if (cartGames.length > 0) return
       else setCartGames(cookies.cart)
     }
-    if (cookies.favorites.length > 0) {
+    if (cookies.favorites && cookies.favorites.length > 0) {
       if (favGames.length > 0) return
       else setFavGames(cookies.favorites)
     }
