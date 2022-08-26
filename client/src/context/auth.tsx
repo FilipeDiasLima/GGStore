@@ -56,7 +56,7 @@ interface AuthContextData {
 const AuthContext = createContext({} as AuthContextData)
 
 export const AuthProvider = ({ children }: AuthProps) => {
-  const [cookies, setCookies, removeCookie] = useCookies(['token'])
+  const [cookies, setCookies, removeCookie] = useCookies(['token', 'cart', 'favorites'])
 
   const [token, setToken] = useState('')
   const [isSigned, setIsSigned] = useState(false)
@@ -95,6 +95,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
       return value.id !== itemId;
     });
     setCartGames(filtered)
+    setCookies('cart', filtered, { path: '/', maxAge: 1000000000 })
   }
 
   function removeItemFromFav(itemId: number) {
@@ -102,6 +103,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
       return value.id !== itemId;
     });
     setFavGames(filtered)
+    setCookies('favorites', filtered, { path: '/', maxAge: 1000000000 })
   }
 
   async function getGame(id: number, type: number) {
@@ -111,8 +113,14 @@ export const AuthProvider = ({ children }: AuthProps) => {
       }
     })
     const game = { ...responseProduct.data, subtotal: responseProduct.data?.price }
-    type === 0 && setCartGames([...cartGames, game])
-    type === 1 && setFavGames([...favGames, game])
+
+    if (type === 0) {
+      setCartGames([...cartGames, game])
+    }
+
+    if (type === 1) {
+      setFavGames([...favGames, game])
+    }
   }
 
   async function signIn(data: LoginData) {
@@ -129,6 +137,8 @@ export const AuthProvider = ({ children }: AuthProps) => {
 
   async function logout() {
     removeCookie('token')
+    removeCookie('cart')
+    removeCookie('favorites')
     setIsSigned(false)
     navigate('/login')
   }
@@ -147,7 +157,20 @@ export const AuthProvider = ({ children }: AuthProps) => {
       setIsSigned(true)
       setToken(cookies.token)
     }
-  }, [cookies.token])
+    if (cookies.cart.length > 0) {
+      if (cartGames.length > 0) return
+      else setCartGames(cookies.cart)
+    }
+    if (cookies.favorites.length > 0) {
+      if (favGames.length > 0) return
+      else setFavGames(cookies.favorites)
+    }
+  }, [, cookies.token, cookies.cart, cookies.favorites])
+
+  useEffect(() => {
+    setCookies('cart', cartGames, { path: '/', maxAge: 1000000000 })
+    setCookies('favorites', favGames, { path: '/', maxAge: 1000000000 })
+  }, [cartGames, favGames])
 
   return (
     <AuthContext.Provider value={{
