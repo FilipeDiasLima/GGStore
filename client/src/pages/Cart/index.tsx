@@ -2,14 +2,33 @@ import { useContext, useEffect, useState } from 'react'
 import { CartCard } from '../../components/CartCard'
 import Header from '../../components/Header'
 import AuthContext, { GameCartProp } from '../../context/auth'
+import { api } from '../../services/api'
+
+import noData from '../../assets/no-cart.svg'
 import styles from './styles.module.scss'
 
 const Cart = () => {
-  const { cartGames } = useContext(AuthContext)
+  const { cartGames, token, clearCart } = useContext(AuthContext)
   const [subtotal, setSubtotal] = useState(0)
   const [discount, setDiscount] = useState(0)
   const [promocode, setPromocode] = useState(0)
   const [total, setTotal] = useState(0)
+
+  async function handlePayment() {
+    for (let i = 0; i < cartGames.length; i++) {
+      const data = {
+        productId: cartGames[i].id,
+        amount: cartGames[i].amount || 1
+      }
+      await api.post('sale', data, {
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      clearCart()
+    }
+  }
 
   useEffect(() => {
     const sum = cartGames.reduce((sum, item) => {
@@ -30,6 +49,12 @@ const Cart = () => {
       />
       <div className={styles.container}>
         <div>
+          {!cartGames.length && (
+            <div className={styles.noGames}>
+              <img src={noData} alt="" />
+              <strong>Seu carrinho está vazio</strong>
+            </div>
+          )}
           {cartGames.map((item: GameCartProp) => (
             <CartCard
               key={item.id}
@@ -67,7 +92,7 @@ const Cart = () => {
             <strong>R$ {total.toFixed(2)}</strong>
           </div>
 
-          <button type="button" className={styles.applyButton}>
+          <button type="button" className={styles.applyButton} onClick={handlePayment}>
             Pagar
           </button>
         </div>

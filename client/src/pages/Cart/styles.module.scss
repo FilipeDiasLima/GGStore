@@ -114,3 +114,19 @@
     background: #EF9B38;
   }
 }
+
+.noGames {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 400px;
+  }
+
+  strong {
+    font-size: 30px;
+  }
+}

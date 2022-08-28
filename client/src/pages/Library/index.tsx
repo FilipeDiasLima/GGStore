@@ -4,6 +4,8 @@ import Header from '../../components/Header'
 import LibCard from '../../components/LibCard'
 import AuthContext from '../../context/auth'
 import { api } from '../../services/api'
+
+import noData from '../../assets/no-data.svg'
 import styles from './styles.module.scss'
 
 interface GameProps {
@@ -37,6 +39,12 @@ const Library = () => {
         isDisable={true}
       />
       <div className={styles.container}>
+        {!games.length && (
+          <div className={styles.noGames}>
+            <img src={noData} alt="" />
+            <strong>Você ainda não possui jogos</strong>
+          </div>
+        )}
         {games.map((game: GameProps) => (
           <LibCard
             key={game.id}

@@ -10,4 +10,22 @@
   >div {
     margin-left: 20px;
   }
+
+}
+
+.noGames {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 700px;
+    margin-top: 30px;
+  }
+
+  strong {
+    font-size: 30px;
+  }
 }

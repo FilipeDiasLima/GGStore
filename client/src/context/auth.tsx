@@ -35,6 +35,7 @@ export interface GameCartProp {
   cover_url: string
   plataform: string
   subtotal?: number
+  amount?: number
 }
 
 interface AuthContextData {
@@ -46,11 +47,12 @@ interface AuthContextData {
   getUser(): void
   signIn(data: LoginData): Promise<void>
   logout(): void
+  clearCart(): void
   addItemToFav(id: number): void
   addItemToCart(id: number): void
   removeItemFromFav(id: number): void
   removeItemFromCart(id: number): void
-  updateSubTotal(value: number, id: number): void
+  updateSubTotal(value: number, id: number, amount: number): void
 }
 
 const AuthContext = createContext({} as AuthContextData)
@@ -66,9 +68,9 @@ export const AuthProvider = ({ children }: AuthProps) => {
 
   const navigate = useNavigate()
 
-  function updateSubTotal(value: number, id: number) {
+  function updateSubTotal(value: number, id: number, amount: number) {
     const newArr = cartGames.map(item => {
-      if (item.id == id) return { ...item, subtotal: value }
+      if (item.id == id) return { ...item, subtotal: value, amount: amount }
       return item
     })
     setCartGames(newArr)
@@ -96,6 +98,11 @@ export const AuthProvider = ({ children }: AuthProps) => {
     });
     setCartGames(filtered)
     setCookies('cart', filtered, { path: '/', maxAge: 1000000000 })
+  }
+
+  function clearCart() {
+    setCartGames([])
+    setCookies('cart', [], { path: '/', maxAge: 1000000000 })
   }
 
   function removeItemFromFav(itemId: number) {
@@ -186,7 +193,8 @@ export const AuthProvider = ({ children }: AuthProps) => {
       removeItemFromCart,
       updateSubTotal,
       addItemToFav,
-      removeItemFromFav
+      removeItemFromFav,
+      clearCart
     }}>
       <CookiesProvider>
         {children}

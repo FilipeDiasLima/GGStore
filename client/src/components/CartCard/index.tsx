@@ -18,8 +18,8 @@ export const CartCard = ({ id, cover_url, name, plataform, price }: GameCartProp
 
   useEffect(() => {
     const subtotal = Number((price * amount).toFixed(2))
-    updateSubTotal(subtotal, id)
-  }, [amount])
+    updateSubTotal(subtotal, id, amount)
+  }, [, amount])
 
   return (
     <div className={styles.container}>
