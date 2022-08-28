@@ -236,8 +236,6 @@ class ProductService {
       where: { id: request.params.id }
     })
 
-    console.log({ response })
-
     return true
   }
 }
